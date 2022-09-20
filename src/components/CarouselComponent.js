@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-  } from 'reactstrap';
-
-import {
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption,
-  Button
+  Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
 } from 'reactstrap';
 
 
@@ -23,7 +11,8 @@ class Example extends Component {
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
     this.goToIndex = this.goToIndex.bind(this);
-    
+    this.onExiting = this.onExiting.bind(this);
+    this.onExited = this.onExited.bind(this);
   }
  
   next() {
@@ -42,42 +31,53 @@ class Example extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
+  onExiting() {
+    this.animating = true;
+  }
+
+  onExited() {
+    this.animating = false;
+  }
+
   render() {
     const { activeIndex } = this.state;
 
     const slides = this.props.items.map((item) => {
       return (
         <CarouselItem
-          className="custom-tag"
-          tag="div"
-          key={item.id}
-        >  
-        <img className='carouselBackgrund img-fluid' src={item.image} alt={"bdr"} />
-        <div className='carousel-center-text'>
-                 <h2>{item.title}</h2>
-                 <p>{item.sub_title}</p>       
-        </div>
-          <CarouselCaption  captionText={""} 
-              captionHeader={
-                <a className='btn btn-register justify-self-center'>Register</a>
-              } />
+            className="custom-tag"
+            tag="div"
+            key={item.id}
+          >  
+          <img className='carouselBackgrund img-fluid' src={item.image} alt={"bdr"} />
+          <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
+                  <h2>{item.title}</h2>
+                  <p>{item.sub_title}</p>       
+          </div>
+            <CarouselCaption  captionText={""} 
+                captionHeader={
+                  <a className=' btn-register justify-self-center 
+                  animate__animated animate__fadeInUp animate__slower'>Register</a>
+                } />
         </CarouselItem>
       );
     });
 
     return (
-      <div>
         <Carousel
           activeIndex={activeIndex}
           next={this.next}
           previous={this.previous}
+          slide={false}
+          fade={true}
+          interval={6000}
         >
-          <CarouselIndicators items={this.props.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
-            {slides}
-          <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-          <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+            <CarouselIndicators items={this.props.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+              {slides}
+            <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
+            <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
         </Carousel>
-      </div>
+      
     );
   }
 }

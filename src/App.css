@@ -27,15 +27,18 @@ body {
   width: 100%;
   text-align: center;
   font-size: 22px;
+
 }
 
 .carousel-center-text h2{
   font-size: 25px;
+  font-weight: bold;
 }
 
 @media (min-width: 544px) {
   .carousel-center-text h2 {
     font-size: 35px;
+    font-weight: bold;
     margin-bottom: 30px;
   }
 }
@@ -87,10 +90,14 @@ body {
   margin: 10px;
   border: 2px solid #68A4C4;
   background-color: rgb(46, 94, 119);
+  text-decoration: none;
 }
 
 .btn-register:hover {
   background-color: #66a4c5;
+  background: #66a4c5;
+  color: rgb(232, 230, 227);
+  text-decoration: none;
 }
 
 

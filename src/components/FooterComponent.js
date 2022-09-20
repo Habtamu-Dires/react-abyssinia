@@ -5,7 +5,7 @@ function Footer(props) {
         <div className="footer mb-0">
             <div className="container mb-0">
                 <div className="row d-flex row-register-footer justify-content-center">
-                    <a className="btn btn-register justify-self-center col-auto"
+                    <a className="btn-register justify-self-center col-auto"
                      href="./register.html" > Register</a>
     
                 </div>
@@ -13,10 +13,10 @@ function Footer(props) {
                     <div className="col-4 col-sm-2">
                         <h5>Links</h5>
                         <ul className="list-unstyled">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Our Clander</a></li>
-                            <li><a href="./certificate.html">Certificate</a></li>
+                            <li><a href="/home">Home</a></li>
+                            <li><a href="./aboutus">About Us</a></li>
+                            <li><a href="./clander">Our Clander</a></li>
+                            <li><a href="./certificate">Certificate</a></li>
                         </ul>
                     </div>
                     <div className="col-7 col-sm-5">

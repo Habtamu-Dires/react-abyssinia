@@ -5,7 +5,6 @@ class Home extends Component {
 
     constructor(props){
         super(props);
-
     }
 
     render(){
@@ -51,7 +50,7 @@ class Home extends Component {
                     <CardBody className="m-2"><style>
                         
                     </style>
-                        <CardTitle className="row justify-content-center align-items-center">
+                        <CardTitle className="d-flex justify-content-center align-items-center">
                             <h4>Our Programs</h4>
                         </CardTitle>
                     </CardBody>

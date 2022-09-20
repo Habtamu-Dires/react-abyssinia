@@ -32,7 +32,7 @@ class Header extends Component {
 
         const items = this.props.programs.map((program)=>{
              return(
-                <DropdownItem>{program.name}</DropdownItem>
+                <DropdownItem key={program.id}>{program.name}</DropdownItem>
              );
         });
         return(
