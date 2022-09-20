@@ -1,38 +1,124 @@
-.App {
+body {
+  font-family: "Open Sans", sans-serif;
+}
+.navbar-dark {
+  background-color:  #07404e;
+}
+
+.dropdown:hover .dropdown-menu{
+  display: block;
+}
+.dropdown-menu {
+  margin: 0px;
+}
+.custom-tag {
+  max-width: 100%;
+  height: 400px;
+  background:#07404e;
+  background-size: cover;
+  position: relative;
+}
+
+.carousel-center-text {
+  color: floralwhite;
+  position: absolute;
+  margin: 0px;
+  top: 20%;
+  width: 100%;
   text-align: center;
+  font-size: 22px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.carousel-center-text h2{
+  font-size: 25px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media (min-width: 544px) {
+  .carousel-center-text h2 {
+    font-size: 35px;
+    margin-bottom: 30px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.carousel-center-text p {
+  font-size: 15px;
+  z-index: 10;
+}
+
+@media (min-width: 544px) {
+  .carousel-center-text p {
+    z-index: auto;
+  }
+}
+
+.carouselBackgrund {
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  opacity: 0.5;
+}
+.home-items {
+  margin-top: 10px;
+}
+.home-image {
+  max-height: 200px;
+  width: 100%;
+}
+.home-text p{
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+}
+.home-text h4{
+  font-size: 22px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.btn-register {
+  color: rgb(232, 230, 227);
+  border-color: rgb(46, 94, 119);
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 50px;
+  line-height: 1;
+  margin: 10px;
+  border: 2px solid #68A4C4;
+  background-color: rgb(46, 94, 119);
+}
+
+.btn-register:hover {
+  background-color: #66a4c5;
+}
+
+
+.footer {
+  background-color: #07404e;
+  margin: 0px auto;
+  padding: 20px 0px 20px 0px;
+  color: floralwhite;
+}
+.footer .row-register-footer {
+  margin: 0px auto;
+  padding: 20px 0px 20px 0px;
+  border-bottom: 1px ridge;
+}
+.footer .footer-content {
+  margin: 0px auto;
+  padding: 20px 0px 20px 0px;
+}
+.footer .footer-content a {
   color: white;
+  background-color: transparent;
+  text-decoration-line: none;
 }
-
-.App-link {
-  color: #61dafb;
+.footer .footer-content a:hover {
+  color: rgb(153, 153, 130);
+  text-decoration: none;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.footer .copy-right {
+  padding: 20px 0px 5px 0px;
+  border-top: 1px ridge;
 }
