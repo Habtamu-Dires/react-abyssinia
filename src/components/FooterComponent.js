@@ -1,22 +1,23 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 
 function Footer(props) {
     return(
         <div className="footer mb-0">
-            <div className="container mb-0">
+            <div className="container ">
                 <div className="row d-flex row-register-footer justify-content-center">
-                    <a className="btn-register justify-self-center col-auto"
-                     href="./register.html" > Register</a>
+                    <Link className="btn-register justify-self-center col-auto"
+                     to="./register" > Register</Link>
     
                 </div>
                 <div className="row footer-content">
                     <div className="col-4 col-sm-2">
                         <h5>Links</h5>
                         <ul className="list-unstyled">
-                            <li><a href="/home">Home</a></li>
-                            <li><a href="./aboutus">About Us</a></li>
-                            <li><a href="./clander">Our Clander</a></li>
-                            <li><a href="./certificate">Certificate</a></li>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="./aboutus">About Us</Link></li>
+                            <li><Link to="./clander">Our Clander</Link></li>
+                            <li><Link to="./certificate">Certificate</Link></li>
                         </ul>
                     </div>
                     <div className="col-7 col-sm-5">

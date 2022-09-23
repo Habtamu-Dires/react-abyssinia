@@ -1,10 +1,13 @@
 body {
   font-family: "Open Sans", sans-serif;
+  
 }
 .navbar-dark {
   background-color:  #07404e;
 }
-
+.dropdown-link {
+  color: gray;
+}
 .dropdown:hover .dropdown-menu{
   display: block;
 }

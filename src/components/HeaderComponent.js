@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Navbar, NavbarBrand, NavItem, NavLink, Nav, Collapse, NavbarToggler, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
-
+import { Navbar, NavbarBrand, NavItem, Nav, Collapse, NavbarToggler, Dropdown, DropdownToggle, 
+           DropdownMenu, DropdownItem, NavLink as Navlink} from "reactstrap";
+import { NavLink} from 'react-router-dom';
 
 class Header extends Component {
 
@@ -45,14 +46,14 @@ class Header extends Component {
                     <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar className="me-auto">
                             <NavItem>
-                                <NavLink> Home </NavLink>
+                                <NavLink className="nav-link" to="/home">Home </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink> About</NavLink>
+                                <NavLink className="nav-link" to="/about">About</NavLink>
                             </NavItem>
                             <NavItem>
                                 <Dropdown className="dropdown" isOpen={this.state.dropdownopen} toggle={this.toggleDropdown} {...this.props}>
-                                    <NavLink>
+                                    <Navlink>
                                         <DropdownToggle caret style={{
                                             background: '#07404e',
                                             border: 'none',
@@ -61,7 +62,7 @@ class Header extends Component {
                                         }}>
                                             Programs
                                         </DropdownToggle> 
-                                    </NavLink>
+                                    </Navlink>
                                     <DropdownMenu className="dropdown-menu">
                                         {items}
                                     </DropdownMenu>
@@ -69,16 +70,16 @@ class Header extends Component {
                                 
                             </NavItem>
                             <NavItem>
-                                <NavLink> Register Online </NavLink>
+                                <NavLink className="nav-link" to="/register">Register Online</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink>Our Clander</NavLink>
+                                <NavLink className="nav-link" to="/clander">Our Calander</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink> Certificate </NavLink>
+                                <NavLink className="nav-link" to="/certificate">Certificate</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink> Contact Us</NavLink>
+                                <NavLink className="nav-link" to="/contact">Contact Us</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

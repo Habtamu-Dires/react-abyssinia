@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {
   Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
 } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
-
-class Example extends Component {
+class Carousal extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
@@ -56,8 +56,8 @@ class Example extends Component {
           </div>
             <CarouselCaption  captionText={""} 
                 captionHeader={
-                  <a className=' btn-register justify-self-center 
-                  animate__animated animate__fadeInUp animate__slower'>Register</a>
+                  <Link to='/register' className=' btn-register justify-self-center 
+                  animate__animated animate__fadeInUp animate__slower'>Register</Link>
                 } />
         </CarouselItem>
       );
@@ -82,4 +82,4 @@ class Example extends Component {
   }
 }
 
-export default Example;
+export default Carousal;
