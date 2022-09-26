@@ -23,9 +23,9 @@ export const PROGRAMS =
     },
     {
         id: 3,
-        name: 'Other Softwares',
+        name: 'Other',
         image: '/assets/images/spss.png',
         description: '',
-        module: ['SPASS']
+        module: ['Other']
     }
  ]

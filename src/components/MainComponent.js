@@ -7,8 +7,11 @@ import Home from "./HomeComponent";
 import { PROGRAMS } from "../shared/programs";
 import {Routes, Route, Navigate } from 'react-router-dom';
 import  Register  from './RegisterComponent';
+import About from "./AboutComponent";
 import  Certificate  from './CertificateComponent';
-
+import Counter from '../features/counter/counter';
+import {PostsList} from '../features/posts/postList';
+import {AddPostForm} from '../features/posts/AddPostForm';
 
 class Main extends Component {
 
@@ -21,6 +24,20 @@ class Main extends Component {
     }
    
     render() {
+        const AboutPage = () => (
+            <>
+                <About />
+                <Counter />
+            </>
+        )
+
+        const ContacPage = ()=> (
+            <>  
+                <AddPostForm />
+                <PostsList />
+            </>
+        );
+
         const HomePage = ()=> {
             return(
                 <>
@@ -34,8 +51,10 @@ class Main extends Component {
                 <Header programs={this.state.programs}/>
                     <Routes>
                         <Route path="/home" element={<HomePage />} />
-                        <Route path="/register" element={<Register />} />
+                        <Route path="/register" element={<Register programs={this.state.programs}/>} />
                         <Route path="/certificate" element={<Certificate />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/contactus" element={<ContacPage />} />
                         <Route path="*" element={
                             <Navigate to='/home' replace />
                         } />

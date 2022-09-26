@@ -79,7 +79,7 @@ class Header extends Component {
                                 <NavLink className="nav-link" to="/certificate">Certificate</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/contact">Contact Us</NavLink>
+                                <NavLink className="nav-link" to="/contactus">Contact Us</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

@@ -5,6 +5,15 @@ body {
 .navbar-dark {
   background-color:  #07404e;
 }
+.link {
+  text-decoration: none;
+  color: black;
+
+}
+.link:hover {
+  color: gray;
+}
+
 .dropdown-link {
   color: gray;
 }
