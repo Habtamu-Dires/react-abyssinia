@@ -1,6 +1,6 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { reactionAdded, updateReaction } from "./postsSlice";
+import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { reactionAdded, selectPostById, updateReaction } from "./postsSlice";
 
 const reactionEmoji = {
     thumbsUp: '👍',
@@ -12,20 +12,30 @@ const reactionEmoji = {
 
 export const ReactionButtons = ({post}) => {
     const dispatch = useDispatch();
+    const thePost = useSelector(state =>  selectPostById(state, post.id));
 
+    const [addRequestStatus, setAddRequestStatus] = useState('idle');
+    const canSave = addRequestStatus === 'idle';
+    const theReactions = {...thePost.reactions};
     const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
         return(
             <button 
                 key={name} 
                 type="button"
                 onClick={ async ()=> {
-                    try {
-                        await dispatch(updateReaction({postId: post.id, reaction: name})).unwrap();
-                    } catch(err) {
-                        alert("Network error");
+                    if(canSave){
+                        try {
+                            setAddRequestStatus("pending");
+                            ++theReactions[name];                       
+                             await dispatch(updateReaction({postId: post.id, reaction: theReactions})).unwrap();
+                         } catch(err) {
+                             alert("Network error");
+                         } finally {
+                            setAddRequestStatus("idle");
+                         }
                     }
-
-                    }
+                    
+                  }
                 }
             >
                     {emoji} {post.reactions[name]}

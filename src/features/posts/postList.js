@@ -20,7 +20,7 @@ export const PostsList = () => {
             dispatch(features());         
         }
     }, [postStatus, dispatch])
-    console.log(postStatus);
+
     const orderedPosts = posts.slice().sort((a,b)=> b.date.localeCompare(a.date));
     const renderPosts = orderedPosts.map(post => (
         <article key={post.id}>

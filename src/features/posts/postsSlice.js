@@ -2,7 +2,6 @@ import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../../shared/baseUrl";
 import fetch from "cross-fetch";
 
-
 const initialState = {
   posts: [],
   status: 'idle',
@@ -30,7 +29,6 @@ const postsSlice = createSlice({
           state.status ='succeeded'
           // Add any fetched posts to the array
           state.posts = state.posts.concat(action.payload);
-          console.log(state.posts);
         })
         .addCase(fetchPosts.rejected, (state, action) => {
           state.status = 'failed'
@@ -47,10 +45,13 @@ const postsSlice = createSlice({
           }
         })
         .addCase(updateReaction.fulfilled, (state, action)=> {
-          console.log(action.payload);
+          const existingPost = state.posts.find(post => post.id === action.payload.id);
+          if(existingPost) {
+            existingPost.reactions = action.payload.reactions;
+          }
         })
         .addCase(updateReaction.rejected, (state, action)=> {
-          console.log("rejjjjjjjjjjjjjjjjjjected");
+          
         })
     }
 });
@@ -95,7 +96,7 @@ export const updateReaction = createAsyncThunk('posts/updateReaction', async new
     const response = await fetch(baseUrl + 'posts/' + postId, {
       method: 'PATCH',
       body: JSON.stringify({
-        
+        reactions: reaction
       }),
       headers: {
         'Content-Type': 'application/json'
