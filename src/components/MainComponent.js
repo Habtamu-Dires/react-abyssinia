@@ -5,13 +5,15 @@ import Carousal from "./CarouselComponent";
 import {CAROUSEL_ITEM} from "../shared/carousel_item";
 import Home from "./HomeComponent";
 import { PROGRAMS } from "../shared/programs";
-import {Routes, Route, Navigate } from 'react-router-dom';
+import {Routes, Route, Navigate, useParams } from 'react-router-dom';
 import  Register  from './RegisterComponent';
 import About from "./AboutComponent";
 import  Certificate  from './CertificateComponent';
 import Counter from '../features/counter/counter';
 import {PostsList} from '../features/posts/postList';
 import {AddPostForm} from '../features/posts/AddPostForm';
+import { SinglePostPage } from '../features/posts/SinglePostPage';
+import {EditPostForm} from '../features/posts/EditPostForm';
 
 class Main extends Component {
 
@@ -46,6 +48,12 @@ class Main extends Component {
                 </>
             );
         }
+        const SinglePost =() => {
+            const { postId } = useParams();
+            return(
+                <SinglePostPage  postId = {postId}/>
+            );
+        }
         return(
             <div>
                 <Header programs={this.state.programs}/>
@@ -55,6 +63,8 @@ class Main extends Component {
                         <Route path="/certificate" element={<Certificate />} />
                         <Route path="/about" element={<AboutPage />} />
                         <Route path="/contactus" element={<ContacPage />} />
+                        <Route path="/contactus/:postId" element={<SinglePost />}/>
+                        <Route path="/editPost/:postId" element={<EditPostForm />} />
                         <Route path="*" element={
                             <Navigate to='/home' replace />
                         } />
