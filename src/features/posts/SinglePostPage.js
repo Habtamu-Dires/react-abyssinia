@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PostAuthor } from './PostAuthor';
 import { selectPostById } from './postsSlice';
 import { ReactionButtons } from './ReactionButton';
-import { TimeAgo } from './TimeAgo';
+import { TimeAgo } from '../../shared/TimeAgo';
 
 export const SinglePostPage = (props) => {
     

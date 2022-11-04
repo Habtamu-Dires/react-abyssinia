@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { studentAdded } from '../redux/studentSlice';
+import { registerStudent, studentAdded } from '../redux/studentSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import fetch from 'cross-fetch';
+import { baseUrl } from '../shared/baseUrl';
+import Registered from '../components/RegisterSuccessComponent';
+import { Persist } from 'formik-persist';
+
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -15,7 +20,7 @@ const MyTextInput = ({ label, ...props }) => {
                 <label htmlFor='{props.id || props.name}'>{label}</label>
             </Col>
 
-            <Col md={7}>
+            <Col md={6}>
                 <input className='text-input form-control' {...field} {...props} />
             </Col>
             <Col md={{ size: 10, offset: 2 }} className="text-danger">
@@ -35,7 +40,7 @@ const MySelect = ({ label, ...props }) => {
             <Col md={2}>
                 <label htmlFor='{props.id || props.name}'>{label}</label>
             </Col>
-            <Col md={7}>
+            <Col md={6}>
                 <select className='form-control'{...field} {...props} />
             </Col>
             <Col sm={{ size: 10, offset: 2 }} className="text-danger">
@@ -50,16 +55,33 @@ const MySelect = ({ label, ...props }) => {
 
 
 function Register(props)  {
+        
+        let navigate = useNavigate();
 
+        const programs = useSelector(state => state.programs);
+        const errMess = useSelector(state => state.programs.error);
+        let programList = [];
+        if(programs.status === 'loading') {
+             programList =[ 
+              <option><div>Loadding ...</div> </option>
+            ]
+        } else if(programs.status === 'failed') {
+            programList = [
+              <option><div>{errMess}</div></option>
+            ]
+        }
+        else {
+            //bring programs from redux store
+            programList = programs.programs.map((program) => {
+                return (
+                    <option key={program.id} value={program.name}>{program.name}</option>
+                );
+            });
+    
+        }
 
-        //bring other programs from props
-        const program = props.programs.map((program) => {
-            return (
-                <option key={program.id} value={program.name}>{program.name}</option>
-            );
-        });
-
-            //form view
+        
+        //form view
         const RegisterForm = () => {
 
             const phoneRegExp = /^[0-9]*$/;
@@ -105,19 +127,35 @@ function Register(props)  {
 
                     })}
                     
-                    onSubmit={(values, {resetForm}) => {
-        
-                        setTimeout(()=> {
-
-                            alert(JSON.stringify(values));
-                            
-                            dispatch(studentAdded({
-                                id: nanoid(), 
-                                ...values
-                            }));
-                            }, 400); 
-                            
-                        }}
+                    onSubmit={(values, {setSubmitting,resetForm}) => {
+                        
+                        fetch(baseUrl + 'students', {
+                            method: 'POST',
+                            body: JSON.stringify(values),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'same-origin'
+                        })
+                        .then(response => {
+                            if(response.ok) {
+                                return response;
+                            } else {
+                                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                                error.response = response;
+                                throw error;
+                            }
+                        },)
+                        .then(response => response.json())
+                        .then(response=> {
+                            dispatch(studentAdded(response));
+                            setSubmitting(false);
+                            resetForm();                                                      
+                            navigate('/registerSuccess');                                                                                                            
+                            //localStorage.setItem("register-form", "");
+                            })
+                        .catch(error => alert('Couldn\'t register\nError '+ error.message))
+                        }}                        
                 >
                     {props => (
                         <Form>
@@ -138,7 +176,7 @@ function Register(props)  {
 
                             <MySelect label="Program" name="program">
                                 <option value="" disabled={true} selected={true}>Select Program</option>
-                                {program}
+                                {programList}
                             </MySelect>
 
                             {props.values.program === "Other" && (
@@ -176,7 +214,7 @@ function Register(props)  {
                                     <button className='btn btn-success' type='submit'>Submit</button>
                                 </Col>
                             </Row>
-                                                   
+                            <Persist name='register-form'></Persist>                    
                         </Form>
 
                     )}
@@ -197,7 +235,7 @@ function Register(props)  {
                     <Card className='row d-flex justify-content-center my-3'>
                         <CardHeader className='d-flex justify-content-center'>
                             <h3>Register</h3></CardHeader>
-                        <CardBody className='col-12 offset-1'>
+                        <CardBody className='col-10 offset-2'>
                             <RegisterForm />
                         </CardBody>
 

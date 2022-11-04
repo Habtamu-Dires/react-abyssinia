@@ -1,94 +1,104 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Navbar, NavbarBrand, NavItem, Nav, Collapse, NavbarToggler, Dropdown, DropdownToggle, 
            DropdownMenu, DropdownItem, NavLink as Navlink} from "reactstrap";
-import { NavLink} from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
+import {  useSelector } from "react-redux";
 
-class Header extends Component {
+function Header() {
 
-    constructor(props) {
-        super(props);
+    const programs = useSelector(state => state.programs);
+    const errMess = useSelector(state => state.programs.error);
 
-        this.state = {
-            isNavOpen: false,
-            dropdownopen: false
-        }
+    const[isNavOpen, setIsNavOpen] = useState(false);
+    const[dropdownopen, setDropDown] = useState(false);
 
-        this.toggleNav = this.toggleNav.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
-    }
+    const toggleNav = () => setIsNavOpen(!isNavOpen);
+    const toggleDropdown = () => setDropDown((prevState)=> !prevState);
+    
+        let items =[];
 
-    toggleNav(){
-        this.setState({
-            isNavOpen: !this.state.isNavOpen
-        });
-    }
-
-    toggleDropdown(){
-        this.setState({
-            dropdownopen: !this.state.dropdownopen
-        })
-    }
-
-    render(){
-
-        const items = this.props.programs.map((program)=>{
-             return(
-                <DropdownItem key={program.id}>{program.name}</DropdownItem>
-             );
-        });
-        return(
-            <div className="mt-0">
-                <Navbar dark expand="md">
-                    <NavbarBrand>
-                      <p>Abyssina Computer <br/>{'\u00A0'} Traning Center</p>
-                    </NavbarBrand>
-                    <NavbarToggler onClick={this.toggleNav}/>
-                    <Collapse isOpen={this.state.isNavOpen} navbar>
-                        <Nav navbar className="me-auto">
-                            <NavItem>
-                                <NavLink className="nav-link" to="/home">Home </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/about">About</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <Dropdown className="dropdown" isOpen={this.state.dropdownopen} toggle={this.toggleDropdown} {...this.props}>
-                                    <Navlink>
-                                        <DropdownToggle caret style={{
-                                            background: '#07404e',
-                                            border: 'none',
-                                            padding: 0,
-                                            color: "inherit"
-                                        }}>
-                                            Programs
-                                        </DropdownToggle> 
-                                    </Navlink>
-                                    <DropdownMenu className="dropdown-menu">
-                                        {items}
-                                    </DropdownMenu>
-                                </Dropdown>
-                                
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/register">Register Online</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/clander">Our Calander</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/certificate">Certificate</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/contactus">Contact Us</NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-        </div>
+        if(programs.status === 'loading') {
+            items =[
+                    <DropdownItem   >
+                        Loading ...
+                    </DropdownItem>
+            ]         
+        }else if(programs.status === 'failed'){
+            items =[
+                    <DropdownItem  >
+                        {errMess}
+                    </DropdownItem>
+            ]
             
-        );
-    }
-}
+       } else {
+            items = programs.programs.map((program)=>{
+                return(     
+                    <div key={program.id} onClick={toggleDropdown} >
+                        <Link  className="link"  to={`/programDetail/${program.id}`}>
+                            <DropdownItem >
+                                {program.name}
+                            </DropdownItem>
+                         </Link>
+                    </div>               
+                
+                );
+            });
+
+  } 
+
+    return(
+        <div className="mt-0">
+            <Navbar dark expand="md">
+                <NavbarBrand>
+                    <p>Abyssina Computer <br/>{'\u00A0'} Traning Center</p>
+                </NavbarBrand>
+                <NavbarToggler onClick={toggleNav}/>
+                <Collapse isOpen={isNavOpen} navbar>
+                    <Nav navbar className="me-auto">
+                        <NavItem>
+                            <NavLink className="nav-link" to="/home">Home </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/about">About</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <Dropdown className="dropdown"  isOpen={dropdownopen}  toggle={toggleDropdown} >
+                                <Navlink>
+                                    <DropdownToggle caret style={{
+                                        background: '#07404e',
+                                        border: 'none',
+                                        padding: 0,
+                                        color: "inherit"
+                                    }}>
+                                        Programs
+                                    </DropdownToggle> 
+                                </Navlink>
+                                <DropdownMenu className="dropdown-menu">
+                                    {items}
+                                </DropdownMenu>
+                            </Dropdown>
+                            
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/register">Register Online</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/calender">Our Calender</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/certificate">Certificate</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to="/contactus">Contact Us</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+        </div>
+        
+    );
+  }
+
 
   
 

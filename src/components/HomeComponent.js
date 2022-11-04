@@ -1,20 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Card, CardBody, CardTitle } from "reactstrap";
+import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
-class Home extends Component {
+function Home()  {
 
-    constructor(props){
-        super(props);
-    }
+    const programs = useSelector(state => state.programs);
+    const errMess = useSelector(state => state.programs.error);
 
-    render(){
-        const programs = this.props.programs.map((program) => {
-            if(program.id%2 === 0){
+    if(programs.status === 'loading'){
+        return(
+            <Loading />
+        )
+    } else if(programs.status === 'failed'){
+        return(
+            <div>
+                {errMess} <br></br>
+                {errMess} <br></br>
+                {errMess}
+            </div>
+            
+        );
+    } else {
+        const programList = programs.programs.map((program) => {
+            if(program.id%2 === 0 && program.featured === true){
                 return(
                     <div key={program.id} className="container">
                         <div className="row d-flex align-items-center justify-content-center mt-5">
                             <div className="col-sm-5 me-1">
-                                <img className="home-image img-fluid" src={program.image} alt={program.name} />
+                                <img className="home-image img-fluid" src={baseUrl + program.image} alt={program.name} />
                             </div>
                             <div className="col-sm-5 home-text">
                                 <h4>{program.name}</h4>
@@ -23,7 +38,7 @@ class Home extends Component {
                         </div>
                     </div>
                 );
-            } else {
+            } else if(program.featured === true) {
                 return(
                     <div key={program.id} className="container">
                         <div className="row d-flex align-items-center justify-content-center mt-5">
@@ -32,13 +47,13 @@ class Home extends Component {
                                     <p>{program.description}</p>
                                 </div>
                                 <div className="col col-sm-5">
-                                    <img className="home-image img-fluid" src={program.image} alt={program.name} />
+                                    <img className="home-image img-fluid" src={baseUrl + program.image} alt={program.name} />
                                 </div>
                                 
                         </div>
                     </div>
                     );    
-            }
+         }
 
         });
 
@@ -47,19 +62,16 @@ class Home extends Component {
                 <Card style={{background: '#2a7285',
                               color:"floralwhite",
                               fontStyle: "bold"}}>
-                    <CardBody className="m-2"><style>
-                        
-                    </style>
+                    <CardBody className="m-2">
                         <CardTitle className="d-flex justify-content-center align-items-center">
                             <h4>Our Programs</h4>
                         </CardTitle>
                     </CardBody>
                 </Card>
                 <div  className=" mb-5">
-                    {programs}
+                    {programList}
                 </div>
            </div> 
-            
             
         );
     }

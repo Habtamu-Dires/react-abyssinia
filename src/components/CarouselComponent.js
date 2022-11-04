@@ -1,85 +1,83 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-class Carousal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { activeIndex: 0 };
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.goToIndex = this.goToIndex.bind(this);
-    this.onExiting = this.onExiting.bind(this);
-    this.onExited = this.onExited.bind(this);
-  }
- 
-  next() {
-    
-    const nextIndex = this.state.activeIndex === this.props.items.length - 1 ? 0 : this.state.activeIndex + 1;
-    this.setState({ activeIndex: nextIndex });
+function Carousal(props)  {
+  
+  let items = props.items;
+
+  const carouselItems = useSelector(state => state.carouselItems);
+
+  if(carouselItems.status === 'succeeded') {
+    items = carouselItems.carouselItems;
   }
 
-  previous() {
-    
-    const nextIndex = this.state.activeIndex === 0 ? this.props.items.length - 1 : this.state.activeIndex - 1;
-    this.setState({ activeIndex: nextIndex });
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const next = () => {
+    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex +1;
+    setActiveIndex(nextIndex);
   }
 
-  goToIndex(newIndex) {
-    this.setState({ activeIndex: newIndex });
+  const previous = ()=>{
+    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
   }
 
-  onExiting() {
-    this.animating = true;
+  const goToIndex = (newIndex)=> {
+    setActiveIndex(newIndex);
+  }
+  const[animating, setAnimating] = useState();
+  
+  const onExiting =()=>{
+     setAnimating(true);
   }
 
-  onExited() {
-    this.animating = false;
+  const onExited =() =>{
+    setAnimating(false);
   }
-
-  render() {
-    const { activeIndex } = this.state;
-
-    const slides = this.props.items.map((item) => {
-      return (
-        <CarouselItem
-            className="custom-tag"
-            tag="div"
-            key={item.id}
-          >  
-          <img className='carouselBackgrund img-fluid' src={item.image} alt={"bdr"} />
-          <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
-                  <h2>{item.title}</h2>
-                  <p>{item.sub_title}</p>       
-          </div>
-            <CarouselCaption  captionText={""} 
-                captionHeader={
-                  <Link to='/register' className=' btn-register justify-self-center 
-                  animate__animated animate__fadeInUp animate__slower'>Register</Link>
-                } />
-        </CarouselItem>
-      );
-    });
-
+  
+  const slides = items.map((item) => {
     return (
-        <Carousel
-          activeIndex={activeIndex}
-          next={this.next}
-          previous={this.previous}
-          slide={false}
-          fade={true}
-          interval={6000}
-        >
-            <CarouselIndicators items={this.props.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
-              {slides}
-            <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-            <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-        </Carousel>
-      
+      <CarouselItem
+          className="custom-tag"
+          tag="div"
+          key={item.id}
+        >  
+        <img className='carouselBackgrund img-fluid' src={item.image} alt={"bdr"} />
+        <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
+                <h2>{item.title}</h2>
+                <p>{item.sub_title}</p>       
+        </div>
+          <CarouselCaption  captionText={""} 
+              captionHeader={
+                <Link to='/register' className=' btn-register justify-self-center 
+                animate__animated animate__fadeInUp animate__slower'>Register</Link>
+              } />
+      </CarouselItem>
     );
-  }
+  });
+
+  return (
+      <Carousel
+        activeIndex={activeIndex}
+        next={next}
+        previous={previous}
+        slide={false}
+        fade={true}
+        interval={6000}
+      >
+          <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+            {slides}
+          <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+          <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+      </Carousel>
+    
+  );
+  
 }
 
 export default Carousal;

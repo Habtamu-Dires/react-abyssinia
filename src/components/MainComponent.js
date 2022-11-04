@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Carousal from "./CarouselComponent";
@@ -8,72 +8,90 @@ import { PROGRAMS } from "../shared/programs";
 import {Routes, Route, Navigate, useParams } from 'react-router-dom';
 import  Register  from './RegisterComponent';
 import About from "./AboutComponent";
-import  Certificate  from './CertificateComponent';
+import ProgramDetail from "./ProgramDetailComponent";
+import Certificate from "./CertificateComponent";
+import Registered from "./RegisterSuccessComponent";
+import ContactUs from "./ContactUsComponent";
+import Calender from "./calender";
 import Counter from '../features/counter/counter';
 import {PostsList} from '../features/posts/postList';
 import {AddPostForm} from '../features/posts/AddPostForm';
 import { SinglePostPage } from '../features/posts/SinglePostPage';
 import {EditPostForm} from '../features/posts/EditPostForm';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPrograms } from "../redux/programsSlice";
+import { fetchStudents } from "../redux/studentSlice";
+import { fetchCorouselItems } from "../redux/carouselItemSlice";
 
-class Main extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            programs: PROGRAMS,
-            carousel_item: CAROUSEL_ITEM,
-        };
-    }
+function Main()  {
    
-    render() {
-        const AboutPage = () => (
-            <>
-                <About />
-                <Counter />
-            </>
-        )
+    const dispatch = useDispatch();
+    const programStatus = useSelector(state => state.programs.status);
+       
+    const programs = PROGRAMS;
+    const carousel_item = CAROUSEL_ITEM;
 
-        const ContacPage = ()=> (
-            <>  
-                <AddPostForm />
-                <PostsList />
-            </>
-        );
+    useEffect(()=> {
+        if(programStatus === 'idle') {
+            dispatch(fetchPrograms());
+            dispatch(fetchStudents());
+            dispatch(fetchCorouselItems());
+        }
+    }, [programStatus, dispatch]) 
+    
 
-        const HomePage = ()=> {
-            return(
-                <>
-                    <Carousal items={this.state.carousel_item}/>
-                    <Home programs={this.state.programs}/>
-                </>
-            );
-        }
-        const SinglePost =() => {
-            const { postId } = useParams();
-            return(
-                <SinglePostPage  postId = {postId}/>
-            );
-        }
+    const AboutPage = () => (
+        
+            <About />
+
+    )
+
+    const ContacPage = ()=> (
+        <>  
+            <AddPostForm />
+            <PostsList />
+        </>
+    );
+
+    const HomePage = ()=> {
         return(
-            <div>
-                <Header programs={this.state.programs}/>
-                    <Routes>
-                        <Route path="/home" element={<HomePage />} />
-                        <Route path="/register" element={<Register programs={this.state.programs}/>} />
-                        <Route path="/certificate" element={<Certificate />} />
-                        <Route path="/about" element={<AboutPage />} />
-                        <Route path="/contactus" element={<ContacPage />} />
-                        <Route path="/contactus/:postId" element={<SinglePost />}/>
-                        <Route path="/editPost/:postId" element={<EditPostForm />} />
-                        <Route path="*" element={
-                            <Navigate to='/home' replace />
-                        } />
-                    </Routes>
-                <Footer />                 
-            </div>
-            
+            <>
+                <Carousal items={carousel_item}/>
+                <Home/>
+            </>
         );
     }
+    const SinglePost =() => {
+        const { postId } = useParams();
+        return(
+            <SinglePostPage  postId = {postId}/>
+        );
+    }
+
+    return(
+        <div>
+            <Header/>
+                <Routes>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/certificate" element={<Certificate />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/programDetail/:programId" element={<ProgramDetail />}/>
+                    <Route path="/contactus" element={<ContactUs />} />
+                    <Route path="/registerSuccess" element={<Registered />} />
+                    <Route path="/calender" element={<Calender />}/>
+                    <Route path="/post" element={<ContacPage />} />
+                    <Route path="/post/:postId" element={<SinglePost />}/>
+                    <Route path="/editPost/:postId" element={<EditPostForm />} />
+                    <Route path="*" element={
+                        <Navigate to='/home' replace />
+                    } />
+                </Routes>
+            <Footer />                 
+        </div>
+        
+    );
 }
 
 export default Main;

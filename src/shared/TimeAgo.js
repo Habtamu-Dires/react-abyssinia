@@ -6,7 +6,12 @@ export const TimeAgo = ({ timestamp }) => {
     if(timestamp) {
         const date = parseISO(timestamp);
         const timePeriod = formatDistanceToNow(date);
-        timeAgo = `${timePeriod} ago`;
+        let now = new Date().toISOString();        
+        if(now > timestamp){
+            timeAgo = `${timePeriod} ago`;
+        } else{
+            timeAgo = `after  ${timePeriod}`;
+        }
     }
 
     return (
