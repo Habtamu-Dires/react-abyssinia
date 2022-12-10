@@ -1,14 +1,11 @@
 import React from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { registerStudent, studentAdded } from '../redux/studentSlice';
-import { nanoid } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import fetch from 'cross-fetch';
 import { baseUrl } from '../shared/baseUrl';
-import Registered from '../components/RegisterSuccessComponent';
 import { Persist } from 'formik-persist';
 
 
@@ -63,18 +60,18 @@ function Register(props)  {
         let programList = [];
         if(programs.status === 'loading') {
              programList =[ 
-              <option><div>Loadding ...</div> </option>
+              <option>Loadding ...</option>
             ]
         } else if(programs.status === 'failed') {
             programList = [
-              <option><div>{errMess}</div></option>
+              <option>{errMess}</option>
             ]
         }
         else {
             //bring programs from redux store
             programList = programs.programs.map((program) => {
                 return (
-                    <option key={program.id} value={program.name}>{program.name}</option>
+                    <option key={program.id} value={program.id}>{program.name}</option>
                 );
             });
     
@@ -86,20 +83,18 @@ function Register(props)  {
 
             const phoneRegExp = /^[0-9]*$/;
 
-            //dispatch
-            const dispatch = useDispatch();
         
             return (
                 <Formik
                     initialValues={{
-                        fullName: '', phone: '', 
+                        name: '', phone: '', 
                         gender: '', program: '', 
-                        otherProgram: '', education: '', 
-                        days: '', time: ''
+                        otherProgram: '', educationStatus: '', 
+                        preferredDays: '', preferredTime: ''
                     }}
 
                     validationSchema={Yup.object({
-                        fullName: Yup.string()
+                        name: Yup.string()
                             .min(2, 'Must be 2 or more characters')
                             .max(15, 'Must be 15 characters or less')
                             .required('Required'),
@@ -109,7 +104,7 @@ function Register(props)  {
                             .matches(phoneRegExp, 'Phone number is not valid'),
                         gender: Yup.string()
                             .required('Required')
-                            .oneOf(['male', 'female'], 'Invalid'),
+                            .oneOf(['Male', 'Female'], 'Invalid'),
 
                         program: Yup.string()
                             .required('Required'),
@@ -118,17 +113,22 @@ function Register(props)  {
                                 is: "Other",
                                 then: Yup.string().required("Must enter the name of program")
                             }),
-                        education: Yup.string()
+                        educationStatus: Yup.string()
                             .required('Required'),
-                        days: Yup.string()
+                        preferredDays: Yup.string()
                             .required('Required'),
-                        time: Yup.string()
+                        preferredTime: Yup.string()
                             .required('Required'),
 
                     })}
                     
                     onSubmit={(values, {setSubmitting,resetForm}) => {
-                        
+                        console.log("Hello")
+                        //let send program id instead of program
+                        //change name to Title Case
+                        values.name = values.name.split(' ').map(word => 
+                            word[0].toUpperCase()+word.substring(1).toLowerCase()).join(' ');
+
                         fetch(baseUrl + 'students', {
                             method: 'POST',
                             body: JSON.stringify(values),
@@ -148,18 +148,17 @@ function Register(props)  {
                         },)
                         .then(response => response.json())
                         .then(response=> {
-                            dispatch(studentAdded(response));
                             setSubmitting(false);
                             resetForm();                                                      
                             navigate('/registerSuccess');                                                                                                            
                             //localStorage.setItem("register-form", "");
                             })
-                        .catch(error => alert('Couldn\'t register\nError '+ error.message))
+                        .catch(error => alert('Error '+ error.message))
                         }}                        
                 >
                     {props => (
                         <Form>
-                            <MyTextInput label="Full Name" name="fullName" type="text"
+                            <MyTextInput label="Full Name" name="name" type="text"
                                 placeholder="Full Name" />
 
 
@@ -169,8 +168,8 @@ function Register(props)  {
 
                             <MySelect label="Gender" name="gender">
                                 <option value="" disabled={true} selected={true}>Select Gender</option>
-                                <option value="female">Female</option>
-                                <option value="male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
                             </MySelect>
 
 
@@ -179,34 +178,35 @@ function Register(props)  {
                                 {programList}
                             </MySelect>
 
-                            {props.values.program === "Other" && (
+                            {
+                            props.values.program === programs.programs.find(prog=>prog.name ==="Others").id && (
                                 <MyTextInput label="Other" name="otherProgram" type="text"
                                     placeholder="other program you want" />
                             )}
 
-                            <MySelect label="Education Level" name="education">
+                            <MySelect label="Education Level" name="educationStatus">
                                 <option value="" disabled={true} selected={true}>Select Education Level</option>
-                                <option value="read and write">Read and Write</option>
-                                <option value="Primary">Primary</option>
-                                <option value="Secondary School">Secondary School</option>
-                                <option value="Diploma">Diploma</option>
-                                <option value="degree and above">Degree and Above</option>
+                                <option value="read_and_write">Read and Write</option>
+                                <option value="primary">Primary</option>
+                                <option value="Secondary_School">Secondary School</option>
+                                <option value="diploma">Diploma</option>
+                                <option value="degree_and_above">Degree and Above</option>
                             </MySelect>
 
 
-                            <MySelect label="Days" name="days">
+                            <MySelect label="Days" name="preferredDays">
                                 <option value="" disabled={true} selected={true}>Select Days</option>
-                                <option value="mondayTofriday">Monday - Friday</option>
-                                <option value="weekend">Saturday {"&"} Sunday</option>
-                                <option value="anyDay">Any Day</option>
+                                <option value="monday_to_friday">Monday - Friday</option>
+                                <option value="saturday_and_sunday">Saturday {"&"} Sunday</option>
+                                <option value="any_day">Any Day</option>
                             </MySelect>
 
-                            <MySelect label="Time" name="time">
+                            <MySelect label="Time" name="preferredTime">
                                 <option value="" disabled={true} selected={true}>Select Time</option>
-                                <option value="morning">Morining</option>
+                                <option value="morning">Morning</option>
                                 <option value="afternoon">Afternoon</option>
                                 <option value="night">Night</option>
-                                <option value="anyTime">Any Time</option>
+                                <option value="any_time">Any Time</option>
                             </MySelect>
 
                             <Row className='form-group my-3 d-flex justify-content-center'>

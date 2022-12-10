@@ -19,13 +19,13 @@ function Header() {
 
         if(programs.status === 'loading') {
             items =[
-                    <DropdownItem   >
+                    <DropdownItem   key={programs.status}>
                         Loading ...
                     </DropdownItem>
             ]         
         }else if(programs.status === 'failed'){
             items =[
-                    <DropdownItem  >
+                    <DropdownItem  key={programs.status}>
                         {errMess}
                     </DropdownItem>
             ]

@@ -31,7 +31,7 @@ const carouselSlice = createSlice({
 });
 
 export const fetchCorouselItems = createAsyncThunk('carouselItems/fetchCorouselItems', async() => {
-    const response = await fetch(baseUrl + 'carouselItems');
+    const response = await fetch(baseUrl + 'carousels');
     return response.json();
   });
 

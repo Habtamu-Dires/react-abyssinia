@@ -4,15 +4,17 @@ import {
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
 
 function Carousal(props)  {
   
   let items = props.items;
-
+  let base_url = '';
   const carouselItems = useSelector(state => state.carouselItems);
 
   if(carouselItems.status === 'succeeded') {
     items = carouselItems.carouselItems;
+    base_url = baseUrl;
   }
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,7 +49,7 @@ function Carousal(props)  {
           tag="div"
           key={item.id}
         >  
-        <img className='carouselBackgrund img-fluid' src={item.image} alt={"bdr"} />
+        <img className='carouselBackgrund img-fluid' src={base_url + item.image} alt={"bdr"} />
         <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
                 <h2>{item.title}</h2>
                 <p>{item.sub_title}</p>       

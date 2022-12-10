@@ -22,9 +22,11 @@ function Home()  {
             </div>
             
         );
-    } else {
+    } else if(programs.status === 'succeeded')  {
+        let shift = true;
         const programList = programs.programs.map((program) => {
-            if(program.id%2 === 0 && program.featured === true){
+            if(shift && program.featured === true){
+                shift = !shift;
                 return(
                     <div key={program.id} className="container">
                         <div className="row d-flex align-items-center justify-content-center mt-5">
@@ -39,6 +41,7 @@ function Home()  {
                     </div>
                 );
             } else if(program.featured === true) {
+                shift = !shift;
                 return(
                     <div key={program.id} className="container">
                         <div className="row d-flex align-items-center justify-content-center mt-5">

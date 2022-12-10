@@ -7,7 +7,7 @@ function Footer(props) {
             <div className="container ">
                 <div className="row d-flex row-register-footer justify-content-center">
                     <Link className="btn-register justify-self-center col-auto"
-                     to="./register" > Register</Link>
+                     to="/register" > Register</Link>
     
                 </div>
                 <div className="row footer-content">

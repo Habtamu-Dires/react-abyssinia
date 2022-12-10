@@ -15,18 +15,17 @@ const programSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchPrograms.pending, (state, acction) =>{
+            .addCase(fetchPrograms.pending, (state, action) =>{
                 state.status = 'loading';
             })
-            .addCase(fetchPrograms.fulfilled, (state,acction)=>{
+            .addCase(fetchPrograms.fulfilled, (state,action)=>{
                 state.status = 'succeeded';
                 //add any fetched program to the array
-                console.log("0202wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-                state.programs = state.programs.concat(acction.payload);
+                state.programs = state.programs.concat(action.payload);
             })
-            .addCase(fetchPrograms.rejected, (state, acction)=>{
+            .addCase(fetchPrograms.rejected, (state, action)=>{
                 state.status = 'failed'
-                state.error = acction.error.message;
+                state.error = action.error.message;
             })
     }
 });

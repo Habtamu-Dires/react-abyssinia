@@ -5,7 +5,8 @@ import {Formik, Form, useField} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from "react-redux";
 import { Persist } from "formik-persist";
-
+import { baseUrl } from "../shared/baseUrl";
+import { stringify } from 'query-string';
 
 const Result = ({status,message}) => {
     if(status === true){
@@ -13,7 +14,7 @@ const Result = ({status,message}) => {
             <div className='row d-flex justify-content-center '>
                 <Card className="d-flex justify-content-center">
                     <CardBody>
-                        <h4>{message}</h4>
+                        <h4 style={{fontWeight: "bold", textAlign: "center"}}>{message}</h4>
                     </CardBody>
                     </Card>
             </div>            
@@ -25,7 +26,6 @@ const Result = ({status,message}) => {
     }
     
 }
-
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -68,9 +68,6 @@ const MySelect = ({ label, ...props }) => {
 };
 
 function Certificate(props) {
-     
-    //load students from redux store
-    const students = useSelector(state => state.students);
 
     //load programs
     const programs = useSelector(state => state.programs);
@@ -78,18 +75,18 @@ function Certificate(props) {
     var programList = [];
     if(programs.status === 'loading') {
             programList =[ 
-            <option><div>Loadding ...</div> </option>
+            <option>Loadding ...</option>
         ]
     } else if(programs.status === 'failed') {
         programList = [
-            <option><div>{errMess}</div></option>
+            <option>{errMess}</option>
         ]
     }
     else {
         //bring programs from redux store
         programList = programs.programs.map((program) => {
             return (
-                <option key={program.id} value={program.name}>
+                <option key={program.id} value={program.id}>
                     {program.name}
                 </option>
             );
@@ -98,7 +95,7 @@ function Certificate(props) {
 
     }
 
-    //state to track the status of student certificate
+    //state to track the status to rerender
     const [status, setStatus] = useState(false);
     const [message, setMessage] = useState('');
     
@@ -109,19 +106,19 @@ function Certificate(props) {
         return(
             <Formik 
             initialValues={{
-                fullName: '',
+                name: '',
                 phone: '',
                 program: '',
                 otherProgram: ''
             }}
             validationSchema={Yup.object({
-                fullName: Yup.string()
+                name: Yup.string()
                     .min(2, 'Must be 2 or more characters')
-                    .max(15, 'Must be 15 characters or less')
+                    .max(50, 'Must be 15 characters or less')
                     .required('Required'),
                 phone: Yup.string()
                     .required('Required')
-                    .min(10, "Must be 10 or more digit")
+                    .min(9, "Must be 10 or more digit")
                     .matches(phoneRegExp, 'Phone number is not valid'),
                 program: Yup.string()
                     .required('Required'),
@@ -134,32 +131,57 @@ function Certificate(props) {
              
              onSubmit={(values, {restForm}) => {
                 setStatus(true);
-                if(students.students !== []) {
-                    
-                    const student = students.students.find(student => student.fullName === values.fullName 
-                                && student.phone === values.phone && student.program === values.program);
-                                            
-                    if(student){                        
-                         if(student.certified){
-                            
-                            setMessage("Your certificate is ready\n");
-                            
-                         } else {
-                            setMessage("Your certificate not ready\n");  
-                         }  
-                    } else{
-                        
-                       setMessage("Your are not registered")         
+                //fetch student from server
+                values.name = values.name.split(' ').map(word => 
+                    word[0].toUpperCase()+word.substring(1).toLowerCase()).join(' ');
+                const query = {name: values.name, phone:values.phone}
+                const url = `${baseUrl}students?${stringify(query)}`;
+                fetch(url, {
+                    method: 'GET',    
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    if(response.ok) {
+                        return response;
+                    } else {
+                        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
                     }
-                } else {                   
-                    setMessage("Network Error\nPlease try again");
-                }
+                },)
+                .then(response => response.json())
+                .then(response=> {
+                    if(response.length !== 0){
+                        const student = response[0]
+                        //find the program name
+                        let programName = programs.programs.find(prog => 
+                                            prog.id === values.program).name
+                        if (programName === "Others") {
+                            programName = values.otherProgram;
+                        }
+                       if(student.program === values.program){
+                        if(student.certificateStatus)
+                            setMessage(`Your Certificate for a ${programName} program is Ready\n`);
+                        else {
+                            setMessage(`Your Certificate for a ${programName} program is not Ready\n`);
+                    } 
+                       } else{
+                            setMessage(`Your are not Registered for a ${programName} Program\n`);
+                       } 
+                    } else{
+                        setMessage("Sorry!, You're not Registered!")
+                    }
+                    })
+                .catch(error => setMessage('Error '+ error.message+'\nPlease try again'))
+                
                
-
              }}
             >
             {props => (<Form>
-                <MyTextInput label="Full Name" name="fullName" type="text" 
+                <MyTextInput label="Full Name" name="name" type="text" 
                         placeholder="Full Name"  />
 
                 <MyTextInput label="Phone" name="phone" type="phone" 
@@ -170,7 +192,8 @@ function Certificate(props) {
                             {programList}
                 </MySelect>                        
                 
-                {props.values.program === "Other" && (
+                {
+                props.values.program === programs.programs.find(prog=>prog.name ==="Others").id && (
                     <MyTextInput label="Other" name="otherProgram" type="text"
                                 placeholder="other program you want" />
                 )}

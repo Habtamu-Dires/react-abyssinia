@@ -24,7 +24,6 @@ const Stuffs = () => {
             })
             .then(response => response.json())
             .then(response=> {
-                console.log(response);
                 setStatus(true);
                 setStuffData(response);
                 })
@@ -42,11 +41,9 @@ const Stuffs = () => {
             return(
                 <div key={stuff.id} className="col-12 mt-5">                                     
                     <div className="d-flex align-items-center">
-                        <div className='flex-shrink-1 mt-0'>
-                            <img className="mt-0" src={baseUrl + stuff.image} alt={stuff.name} />
-                        </div>
-                        <div body className="flex-grow-1 ms-5 mt-4">
-                            <div>{stuff.name}</div>
+                        
+                        <div className="flex-grow-1 ms-5 mt-4">
+                            <h2>{stuff.name}</h2>
                             <h6>{stuff.designation}</h6>
                             <p>{stuff.description}</p>
                         </div>
@@ -88,11 +85,11 @@ const About = () => {
             <div className="row">
                <div className="col-12 col-md-6">
                     <h2>Our History</h2>
-                    <p>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.</p>
-                    <p>The restaurant traces its humble beginnings to <em>The Frying Pan</em>, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.</p>
+                    <p>Started in 1998, Abyssinia computer Training Center is one of the leading computer trinaing center in Bahir Dar.</p>
+                    <p>The training center has more than thousounds of certified studetns in Bahir Dar, a successful chain started by our CEO, Mr.Getachew, that featured for the first time the citie's best training center.</p>
                 </div>
                 <div className="col-12 col-md-5 m-3">
-                    <img src={baseUrl + '/assets/images/sample.jpg'} height="300" width="350"></img>
+                    <img src={baseUrl + '/images/sample.jpg'} height="300" width="350"></img>
                 </div>
             </div>
             <div className="row">

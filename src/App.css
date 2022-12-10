@@ -112,6 +112,25 @@ body {
   color: rgb(232, 230, 227);
   text-decoration: none;
 }
+/*calender tables*/
+.calender_tables table, .calender_tables th, .calender_tables td{
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+
+}
+
+.calender_tables tr {
+  background-color: #0f9999;
+}
+
+.calender_tables th {
+  background-color: #9cd368;
+}
+/* program detail */
+.program_detail h3 {
+  font-weight: bold;
+}
 
 
 .footer {

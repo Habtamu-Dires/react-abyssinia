@@ -129,15 +129,15 @@ const FeedbackForm = () => {
     return(
         <Formik 
         initialValues={{
-            fullName: '',
+            name: '',
             phone: '',
-            Email: '',
+            email: '',
             mayWeContactYou: false,
-            contactWay:'tel',
+            contactWay:'',
             feedback: ''
         }}
         validationSchema={Yup.object({
-            fullName: Yup.string()
+            name: Yup.string()
                     .min(2, 'Must be 2 or more characters')
                     .max(15, 'Must be 15 characters or less')
                     .required('Required'),
@@ -185,7 +185,7 @@ const FeedbackForm = () => {
          }}
         >
         {props => (<Form>
-            <MyTextInput label="Full Name" name="fullName" type="text" 
+            <MyTextInput label="Full Name" name="name" type="text" 
                     placeholder="Full Name"  />
 
             <MyTextInput label="Contact Tel." name="phone" type="phone" 
@@ -210,7 +210,6 @@ const FeedbackForm = () => {
             </Row>
             
             <MyTextArea label="Your Feedback" name="feedback" rows="6" />
-
             
             <Row className='form-group my-3 d-flex '>
                 <Col md={4}>

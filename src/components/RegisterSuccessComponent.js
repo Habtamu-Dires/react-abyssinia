@@ -9,14 +9,14 @@ function Registered() {
            <Card className="m-5">
                 <CardHeader><h4 className="text-center">Abysinia Computer Training Center</h4></CardHeader>
                 <CardBody>
-                    <div class="d-flex row">
+                    <div className="d-flex row">
                             <h2 className="col-12 text-center">
                                 Thank You!!!</h2><br></br>
                             <h4 className="col-12 text-center" >
                                 You have Successfully Registered </h4>
                     </div>
-                    <div class="col mt-5">
-                        <div class="row justify-content-center">
+                    <div className="col mt-5">
+                        <div className="row justify-content-center">
                             <Link to={'/home'} className="btn btn-success col-auto" >Finish </Link>
                         </div>                           
                     </div>
