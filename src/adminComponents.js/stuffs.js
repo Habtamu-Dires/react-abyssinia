@@ -1,7 +1,14 @@
 import { Datagrid, EditButton, List, TextField, Edit, SimpleForm, TextInput, Create, useRecordContext } from 'react-admin';
 
+
+const stuffFilter = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <TextInput source="id" label="Id" />
+];
+
+
 export const StuffList = () => (
-    <List>
+    <List filters={stuffFilter}>
         <Datagrid rowClick="edit">
             <TextField source="name" />
             <TextField source="designation" />

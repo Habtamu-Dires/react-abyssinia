@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Admin, EditGuesser, ListGuesser, Resource } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import Dashboard from './Dashboard';
 import authProvider from './authProvider';
 import dataProvider from './dataProvider';
@@ -11,7 +11,6 @@ import { StudentCreate, StudentEdit, StudentList } from './students';
 import { FeedbackEdit, FeedbackList } from './feedbacks';
 import { ClassCreate, ClassEdit, ClassList } from './classes';
 import { StuffCreate, StuffEdit, StuffList } from './stuffs';
-
 
 const AdminApp = () => (
    <Admin basename='/admin' dataProvider={dataProvider} authProvider={authProvider} dashboard={Dashboard}>

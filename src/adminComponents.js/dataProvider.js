@@ -3,7 +3,9 @@ import { stringify } from 'query-string';
 import axios from 'axios';
 import fetch from 'cross-fetch';
 
+
 const apiUrl = 'http://localhost:3000';
+
 
 const dataProvider= {
     getList: (resource, params) => {
@@ -123,6 +125,7 @@ const dataProvider= {
         update: async (resource, params) => {
 
             const url = `${apiUrl}/${resource}/${params.id}`;
+            const bearer = 'Bearer ' + localStorage.getItem('token');
                         
             if (resource === 'programs' || resource === 'carousels') {
                 const formData = new FormData();
@@ -130,13 +133,12 @@ const dataProvider= {
                     formData.append("imageFile",params.data.pictures.rawFile);
                 }
                 let {pictures, ...datas} = params.data;
-                console.log(datas); 
-                
-                formData.append("datas", JSON.stringify(datas));
-                
-                
+                formData.append("datas", JSON.stringify(datas));   
                 const response = await axios.put(url, formData, 
-                    { headers: {'Content-Type': 'multipart/form-data'}});
+                    { headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': bearer
+                    }});
                 
                 return({
                     data: response.data                        
@@ -146,7 +148,7 @@ const dataProvider= {
                 fetch(url,{
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                     credentials: 'same-origin'
                 }).then(response => response.json())
@@ -161,7 +163,8 @@ const dataProvider= {
                                 method: 'PUT',
                                 body: JSON.stringify({enrolled: false}),
                                 headers: {
-                                    'Content-Type': 'application/json'
+                                    'Content-Type': 'application/json',
+                                    'Authorization': bearer
                                 },
                                 credentials: 'same-origin'
                             })
@@ -173,7 +176,8 @@ const dataProvider= {
                     method: 'PUT',
                     body: JSON.stringify(params.data),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': bearer
                     },
                     credentials: 'same-origin'
                 })
@@ -196,7 +200,8 @@ const dataProvider= {
                             method: 'PUT',
                             body: JSON.stringify({enrolled: true}),
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Authorization': bearer
                             },
                             credentials: 'same-origin'
                         })
@@ -213,7 +218,8 @@ const dataProvider= {
                         method: 'PUT',
                         body: JSON.stringify(params.data),
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': bearer
                         },
                         credentials: 'same-origin'
                     })
@@ -241,11 +247,14 @@ const dataProvider= {
                 filter: JSON.stringify({ id: params.ids}),
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
+            const bearer = 'Bearer ' + localStorage.getItem('token');
+
             return fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify(params.data),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer
                 },
                 credentials: 'same-origin'
             })
@@ -271,6 +280,7 @@ const dataProvider= {
 
         create: async (resource, params) =>{
             const url = `${apiUrl}/${resource}`;
+            const bearer = 'Bearer ' + localStorage.getItem('token');
 
             if(resource === 'programs' || resource === 'carousels'){
                 console.log("we are In")
@@ -284,10 +294,11 @@ const dataProvider= {
                 formData.append("datas", JSON.stringify(datas));
 
                 const response = await axios.post(url, formData, 
-                    { headers: {'Content-Type': 'multipart/form-data'}});
+                    { headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': bearer
+                    }});
                 
-                console.log(response);
-                console.log(response.data.id);
                 return({
                     data: { ...datas, id: response.data.id },                        
                     }
@@ -297,7 +308,8 @@ const dataProvider= {
                     method: 'POST',
                     body: JSON.stringify(params.data),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': bearer
                     },
                     credentials: 'same-origin'
                 })
@@ -320,7 +332,8 @@ const dataProvider= {
                             method: 'PUT',
                             body: JSON.stringify({enrolled: true}),
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Authorization': bearer
                             },
                             credentials: 'same-origin'
                         })
@@ -339,7 +352,8 @@ const dataProvider= {
                     method: 'POST',
                     body: JSON.stringify(params.data),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': bearer
                     },
                     credentials: 'same-origin'
                     })
@@ -364,11 +378,12 @@ const dataProvider= {
 
             }
             
-            
-               },  
+            },  
         
         delete: (resource, params) =>{
             const url = `${apiUrl}/${resource}/${params.id}`; 
+            const bearer = 'Bearer ' + localStorage.getItem('token');
+
             if(resource === 'classes'){
                 //unenroll if he class is deleted
                 params.previousData.students.forEach(student => {
@@ -379,7 +394,8 @@ const dataProvider= {
                         method: 'PUT',
                         body: JSON.stringify({enrolled: false}),
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': bearer
                         },
                         credentials: 'same-origin'
                     })
@@ -390,7 +406,8 @@ const dataProvider= {
             return fetch(url, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer
                 },
                 credentials: 'same-origin'
                 })
@@ -418,42 +435,49 @@ const dataProvider= {
                 filter: JSON.stringify({ id: params.ids}),
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
-            //unenroll students 
-            //fetch classes and unenroll students
-            fetch(url,{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'same-origin'
-            }).then(response => response.json())
-            .then(response => {
-                
-                response.forEach(theClass => {
-                    
-                    for(let student of theClass.students){
-                        let url = `${apiUrl}/students/${student.student}`;
-                    
-                        fetch(url, {
-                            method: 'PUT',
-                            body: JSON.stringify({enrolled: false}),
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            credentials: 'same-origin'
-                        })
-                        .catch(error => console.log('Error '+ error.message))
-                        
-                    }
-                    
-                })
-            })
-            .catch(error => console.log('Error '+ error.message))
+            const bearer = 'Bearer ' + localStorage.getItem('token');
 
+            if(resource === 'classes'){
+                //unenroll students 
+                //fetch classes and unenroll students
+                fetch(url,{
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': bearer
+                    },
+                    credentials: 'same-origin'
+                }).then(response => response.json())
+                .then(response => {
+                    
+                    response.forEach(theClass => {
+                        
+                        for(let student of theClass.students){
+                            let url = `${apiUrl}/students/${student.student}`;
+                        
+                            fetch(url, {
+                                method: 'PUT',
+                                body: JSON.stringify({enrolled: false}),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': bearer
+                                },
+                                credentials: 'same-origin'
+                            })
+                            .catch(error => console.log('Error '+ error.message))
+                            
+                        }
+                        
+                    })
+                })
+                .catch(error => console.log('Error '+ error.message))
+            }
+           
             return fetch(url, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer
                 },
                 credentials: 'same-origin'
                 })
@@ -478,4 +502,8 @@ const dataProvider= {
         }
 };
 
+
 export default dataProvider;
+
+
+

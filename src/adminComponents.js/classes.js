@@ -12,9 +12,13 @@ import { ArrayField, ChipField, Datagrid, EditButton, List, SingleFieldList, Tex
 
 import {Loading} from '../components/LoadingComponent'
 
+const classFilter = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <TextInput source="program" label="Program" />
+];
 
 export const ClassList = () => (
-    <List>
+    <List filters={classFilter}>
         <Datagrid rowClick="edit">
             <ReferenceField source="program" reference='programs'/>
             {/*

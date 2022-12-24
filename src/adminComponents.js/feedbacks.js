@@ -1,7 +1,14 @@
 import { BooleanField, BooleanInput, Datagrid, DateField, DateInput, Edit, EditButton, List, SimpleForm, TextField, TextInput } from 'react-admin';
 
+
+const feedbackFilter = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <TextInput source="id" label="Program" />
+];
+
+
 export const FeedbackList = () => (
-    <List>
+    <List filters={feedbackFilter}>
         <Datagrid rowClick="edit">
             <TextField source="name" />
             <TextField source="phone" />

@@ -1,8 +1,14 @@
 import { BooleanField, Datagrid, EditButton, List, NumberField, TextField ,
     BooleanInput, DateInput, Edit, NumberInput, SimpleForm, TextInput, useRecordContext, Create, ReferenceInput, ReferenceField, SelectInput, FormDataConsumer } from 'react-admin';
 
+
+const studentFilter = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <TextInput source="id" label="Id" />
+];
+
 export const StudentList = () => (
-    <List>
+    <List filters={studentFilter}>
         <Datagrid rowClick="edit">
             <TextField source="name" />
             <TextField source="phone" />
