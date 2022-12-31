@@ -1,13 +1,197 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from '@mui/material';
 import { baseUrl } from "../shared/baseUrl";
 import { useSelector } from "react-redux";
 import { Loading } from "../components/LoadingComponent";
 import {Bar, Line} from 'react-chartjs-2';
 import { Chart, registerables} from 'chart.js';
-import { date } from "yup";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,  FormGroup } from 'reactstrap';
+import { useLogout } from "react-admin";
+import {Formik, Form, useField} from 'formik';
+import {Row, Col} from "reactstrap";
+import * as Yup from 'yup';
+
 Chart.register(...registerables);
 
+const MyTextInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+        <Row className='form-group mt-2'>
+            <Col md={12}>
+                <label htmlFor='{props.id || props.name}'>{label}</label>
+            </Col>
+
+            <Col md={10}>
+                <input className='text-input form-control' {...field} {...props} />
+            </Col>
+            <Col md={{ size: 10, offset: 2 }} className="text-danger">
+                {meta.touched && meta.error ? (
+                    <div className='error'>{meta.error}</div>
+                ) : null}
+            </Col>
+        </Row>
+    );
+}
+
+//form
+const ProfileForm = () => {
+    let creds;
+    let bearer;
+    //why typeof windo why???
+    if (typeof window !== 'undefined') {
+        creds = JSON.parse(localStorage.getItem('creds'));
+        bearer = 'Bearer ' + localStorage.getItem('token');
+        
+    }
+
+    return(
+        <Formik 
+        initialValues={{
+            username: creds.username,
+            name: creds.name,
+            oldpassword: '',
+            newpassword: '',            
+            confirm_passowrd: ''
+        }}
+        validationSchema={Yup.object({
+            name: Yup.string()
+                .min(3, 'Must be 3 or more characters')
+                .max(50, 'Must be 50 characters or less')
+                .required('Required'),
+            username: Yup.string()
+                .min(2, 'Must be 2 or more characters')
+                .max(20, 'Must be 20 characters or less')
+                .required('Required'),
+            newpassword: Yup.string()
+                .min(3, 'Must be 3 or more characters')
+                .max(20, 'Must be 20 characters or less')
+                .required('Required'),
+            oldpassword: Yup.string()
+                .min(2, 'Must be 2 or more characters')
+                .max(20, 'Must be 20 characters or less')
+                .required('Required'),
+            confirm_passowrd: Yup.string()
+                .min(2, 'Must be 2 or more characters')
+                .max(20, 'Must be 20 characters or less')
+                .required('Required')
+        })}
+        
+        >
+        {props => (<Form>
+            <MyTextInput label="Username" id="username" name="username" type="text" 
+                           placeholder="Username"  />
+            <MyTextInput label="Full Name" id="name" name="name" type="text" 
+                        placeholder="Full Name" />
+            <MyTextInput label="Old Password" id="oldpassword" name="oldpassword" type="password" 
+                        placeholder="Old Passsword"  />
+            <MyTextInput label="New Password" id="newpassword" name="newpassword" type="password" 
+                            placeholder="New Password" />
+            <MyTextInput label="Confirm Password" id="confirm_password" name="confirm_password" type="password" 
+                        placeholder="Confirm Password"  />
+        </Form>
+        )}
+
+        </Formik>
+    )
+}
+
+//profile
+const Profile = () => {
+
+    const [modal, setModal] = useState(false);
+    const logout = useLogout();
+    //values
+    let creds = {}
+    let bearer = ''
+    //why typeof windo why???
+    if (typeof window !== 'undefined') {
+        creds = JSON.parse(localStorage.getItem('creds'));
+        bearer = 'Bearer ' + localStorage.getItem('token');
+        
+    }
+    const toggle = () => {
+        setModal(!modal)
+    }
+
+    const save_profile = () => {
+        
+        const username = document.querySelector('#username').value;
+        const name = document.querySelector('#name').value;
+        const newpassword = document.querySelector('#newpassword').value;
+        const oldpassword = document.querySelector('#oldpassword').value;
+        const confirm_password = document.querySelector('#confirm_password').value;
+       
+        if(confirm_password !== newpassword) {
+            alert("The password you enter are different");
+        } else {
+
+            fetch(`${baseUrl}users/update`,{
+                method: 'PUT',
+                body:JSON.stringify({
+                    username: username,
+                    name: name,
+                    newpassword: newpassword,
+                    oldpassword: oldpassword
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearer
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(response => {
+                logout()
+            })
+            .catch(err => console.log(err))
+        }
+        
+    }
+
+    return(
+        <div className="row">
+            <div className="d-flex justify-content-end">
+                <Button onClick={toggle} className="btn btn-secondary">My Profile</Button>
+            </div>
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>My Profile</ModalHeader>
+                <ModalBody>
+                    <ProfileForm />
+                    {/*<form>
+                        <FormGroup className="row">
+                            <label htmlFor="username" className="ms-1 col-12">Username</label>
+                            <input type="text" id="username" className="ms-3 col-10" placeholder="Username"
+                             defaultValue={creds.username} required/>
+                        </FormGroup>
+                        <FormGroup className="row">
+                            <label htmlFor="fullname" className="ms-1 col-12">Full Name</label>
+                            <input type="text" id="fullname" className="ms-3 col-10" placeholder="Full Name"
+                             defaultValue={creds.name} />
+                        </FormGroup>
+                        <FormGroup className="row">
+                            <label htmlFor="oldpassword" className="ms-1 col-12">Old Password</label>
+                            <input type="password" id="oldpassword" className="ms-3 col-10" placeholder="Old Password"/>
+                        </FormGroup>
+                        <FormGroup className="row">
+                            <label htmlFor="newpassword" className="ms-1 col-12">New Password</label>
+                            <input type="password" id="newpassword" className="ms-3 col-10" placeholder="New Password"/>
+                        </FormGroup>
+                        <FormGroup className="row">
+                            <label htmlFor="confirm_password" className="ms-1 col-12">Confirm Password</label>
+                            <input type="password" id="confirm_password" className="ms-3 col-10" placeholder="Confirm Password"/>
+                        </FormGroup>
+                    </form> */}
+                    
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={save_profile}>Save</Button>
+                    <Button color="secondary" onClick={logout}>Logout</Button>
+                </ModalFooter>
+            </Modal>
+        </div>
+        
+    )
+}
 
 const Dashboard = () => {
     const [students, setStudents] = useState(null);
@@ -74,7 +258,7 @@ const Dashboard = () => {
                 }
                 const color = "rgb(" + r() + "," + r() + "," + r() + ")";
                 return(
-                    <div key={program.id} className="col-md-6">
+                    <div key={program.id} className="col-md-4">
                         <Card>
                             <CardHeader title={program.name} style={{color: color}}/>
                             <CardContent>
@@ -122,7 +306,6 @@ const Dashboard = () => {
                 if(the_students) {
                     
                     the_students.map(student => {
-                        console.log(student.otherProgram)
                         if(student.otherProgram in otherProgramObject) {
                             otherProgramObject[student.otherProgram] += 1;
                         } else {
@@ -202,9 +385,7 @@ const Dashboard = () => {
                                     borderColor: color, 
                                     backgroundColor: color }
                 the_students.map(student => {
-                    console.log("hello")
                     //console.log(student.createdAt)
-                    console.log( new Date(student.createdAt).getMonth() )
                     each_data['data'][new Date(student.createdAt).getMonth()] += 1;
                 });
                 datasets.push(each_data)
@@ -242,22 +423,30 @@ const Dashboard = () => {
     
         return(
         
-            <div className="container">
-                <Card>
-                    <CardHeader title="Abyssinia Computer Engineering Dashboard" />
-                </Card>
-                <div className="row my-5">
-                        <h2>Programs</h2>
-                        {theProgram}
+            <div>
+                <div className="row">
+                    <Card className="container col-12 col-md-8">
+                        <CardHeader title="Abyssinia Computer Engineering Dashboard" />
+                    </Card>
+                    <div className="col-12 col-md-4 mt-2">                        
+                        <Profile />
+                    </div>
                 </div>
-                <div className="row my-4">
-                    <h2>Other Programs</h2>
-                    {theOtherPrograms}
-                </div>
-                <div className="row my-5">
-                    <h2>Trend</h2>
-                    {<LineChart />}
-                </div>
+                <div className="container">
+                    <div className="row my-5">
+                            <h2>Programs</h2>
+                            {theProgram}
+                    </div>
+                    <div className="row my-4">
+                        <h2>Other Programs</h2>
+                        {theOtherPrograms}
+                    </div>
+                    <div className="row my-5">
+                        <h2>Trend</h2>
+                        {<LineChart />}
+                    </div>
+                </div>                
+                
             </div>                    
             
         );

@@ -16,9 +16,8 @@ const authProvider = {
                     if (response.success) {
                         // If login was successful, set the token in local storage
                         localStorage.setItem('token', response.token);
-                        //if you needs creds username, firstname, lastname 
-                        console.log(response.creds)
-                        //localStorage.setItem('creds', JSON.stringify(creds));
+                        //if you needs creds username, firstname, lastname                     
+                        localStorage.setItem('creds', JSON.stringify(response.creds));
                         return Promise.resolve();
                     }
                     else {
@@ -26,15 +25,12 @@ const authProvider = {
                     }
                 })
             .catch(err => { return Promise.reject()})
-        //localStorage.setItem('username', username);
-        //accept all username/password combinations
-        //return Promise.resolve();
     },
-    //called when the user clickds on the logout button
+    //called when the user clicks on the logout button
     logout: () => {
         //localStorage.removeItem('username');
         localStorage.removeItem('token');
-        //localStorage.removeItem('creds');
+        localStorage.removeItem('creds');
         return Promise.resolve();
     },
     //called when the API returns an error
@@ -42,7 +38,7 @@ const authProvider = {
         if(status === 401 || status === 403) {
             //localStorage.removeItem('username');
             localStorage.removeItem('token');
-            //localStorage.removeItem('creds');
+            localStorage.removeItem('creds');
             return Promise.reject();
         }
         return Promise.resolve();
