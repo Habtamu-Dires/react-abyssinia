@@ -194,7 +194,7 @@ function Register(props)  {
                                     <option value="" disabled={true} selected={true}>Select Education Level</option>
                                     <option value="read_and_write">Read and Write</option>
                                     <option value="primary">Primary</option>
-                                    <option value="Secondary_School">Secondary School</option>
+                                    <option value="secondary_school">Secondary School</option>
                                     <option value="diploma">Diploma</option>
                                     <option value="degree_and_above">Degree and Above</option>
                                 </MySelect>

@@ -14,20 +14,14 @@ import {Loading} from '../components/LoadingComponent'
 
 const classFilter = [
     <TextInput source="q" label="Search" alwaysOn />,
-    <TextInput source="program" label="Program" />
+    <DateInput source="classStartDate" label="Start Year & Month"/>,
+    <DateInput source="classEndDate" label="End Year & Month"/>
 ];
 
 export const ClassList = () => (
     <List filters={classFilter}>
         <Datagrid rowClick="edit">
             <ReferenceField source="program" reference='programs'/>
-            {/*
-            <ArrayField source="students">
-                <SingleFieldList>                   
-                    <ReferenceField source="student" reference="students"/>           
-                </SingleFieldList>                               
-            </ArrayField>
-            */}
             <ArrayField source="schedule">
                 <SingleFieldList>
                     <>
@@ -185,12 +179,4 @@ export const ClassCreate = () => {
         </Create>
     )
 }; 
-/**
- * 
- * <SimpleFormIterator inline>
-        <SelectInput onCreate={()=>{
-    
-        }}  source="student" choices={studentList} 
-            optionText="name" optionValue='id' />
-    </SimpleFormIterator>
- */
+

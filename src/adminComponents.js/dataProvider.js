@@ -1,4 +1,3 @@
-import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 import axios from 'axios';
 import fetch from 'cross-fetch';
@@ -153,15 +152,20 @@ const dataProvider= {
                     credentials: 'same-origin'
                 }).then(response => response.json())
                 .then(response => {
-                    //change enroll status of students                  
+                    //change enroll status of students  and program end and start date                 
                     for(let student of response.students){
                         //change enroll status of previous students to false. 
+                        // put the program start and end date to null
                         if(!params.data.students.includes(student)){
                             let url = `${apiUrl}/students/${student.student}`;
                     
                             fetch(url, {
                                 method: 'PUT',
-                                body: JSON.stringify({enrolled: false}),
+                                body: JSON.stringify({                
+                                    enrolled: false, 
+                                    programStartDate: '',
+                                    programEndDate: '',
+                                }),
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'Authorization': bearer
@@ -198,7 +202,11 @@ const dataProvider= {
                         
                         fetch(url, {
                             method: 'PUT',
-                            body: JSON.stringify({enrolled: true}),
+                            body: JSON.stringify({                
+                                enrolled: true, 
+                                programStartDate: response.classStartDate,
+                                programEndDate: response.classEndDate
+                            }),
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': bearer
@@ -324,13 +332,17 @@ const dataProvider= {
                 },)
                 .then(response => response.json())
                 .then(response=> {
-                    //enroll students 
+                    //enroll students and program start date
                     for(let student of response.students){
                         let url = `${apiUrl}/students/${student.student}`;
                     
                         fetch(url, {
                             method: 'PUT',
-                            body: JSON.stringify({enrolled: true}),
+                            body: JSON.stringify({
+                                enrolled: true, 
+                                programStartDate: response.classStartDate,
+                                programEndDate: response.classEndDate
+                            }),
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': bearer

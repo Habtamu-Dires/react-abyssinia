@@ -4,7 +4,21 @@ import { BooleanField, Datagrid, EditButton, List, NumberField, TextField ,
 
 const studentFilter = [
     <TextInput source="q" label="Search" alwaysOn />,
-    <TextInput source="id" label="Id" />
+    <TextInput source="id" label="Id" />,
+    <ReferenceInput source="program" reference="programs">
+                <SelectInput />
+    </ReferenceInput>,
+    <SelectInput source="enrolled" label="Enrolled" choices={[
+        {id: 'True', name: 'True'},
+        {id: 'False', name: 'False'}
+    ]}/>,
+    <SelectInput source="certificateStatus" label="Certified" choices={[
+        {id: 'True', name: 'True'},
+        {id: 'False', name: 'False'}
+    ]}/>,
+    <DateInput source="createdAt" label="Registred Year & Month"/>,
+    <DateInput source="programStartDate" label="Program Start Year & Month"/>,
+    <DateInput source="programEndDate" label="Program End Year & Month"/>,
 ];
 
 export const StudentList = () => (
@@ -78,12 +92,12 @@ export const StudentEdit = () => {
             <SelectInput source="preferredTime" choices={
                 time_choices
             }/>
-            <BooleanInput source="enrolled" />
-            <TextInput source="payment" />
-            <DateInput source="programStartDate" />
-            <DateInput source="programEndDate" />
+            <TextInput source="payment" />            
             <BooleanInput source="certificateStatus" />
             <TextInput source="remark" />
+            <TextInput disabled source="enrolled"/>
+            <DateInput disabled source="programStartDate" />
+            <DateInput disabled source="programEndDate" />
             <DateInput disabled source="createdAt" />
             <DateInput disabled source="updatedAt" />
         </SimpleForm>
@@ -112,12 +126,8 @@ export const StudentCreate = () => (
             }/>
             <SelectInput source="preferredTime" choices={
                 time_choices
-            }/>
-            <BooleanInput source="enrolled" />
+            }/>            
             <TextInput source="payment" />
-            <DateInput source="programStartDate" />
-            <DateInput source="programEndDate" />
-            <BooleanInput source="certificateStatus" />
             <TextInput source="remark" />
         </SimpleForm>
     </Create>
