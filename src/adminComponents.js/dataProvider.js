@@ -1,10 +1,9 @@
 import { stringify } from 'query-string';
 import axios from 'axios';
 import fetch from 'cross-fetch';
-
+import authProvider from './authProvider';
 
 const apiUrl = 'http://localhost:3000';
-
 
 const dataProvider= {
     getList: (resource, params) => {
@@ -30,7 +29,11 @@ const dataProvider= {
                         }
                     ); 
             })
-            .catch(error => console.log('\nError '+ error.message))
+            .catch(error => {
+                console.log(error.message);                                                            
+                authProvider.checkError(error);
+                return error;
+            });
         
         },
 
@@ -53,7 +56,11 @@ const dataProvider= {
                                 data: response,
                         });                     
                         })
-                       .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message));
+                       .catch(error => {
+                            console.log(error.message)                                                            
+                            authProvider.checkError(error)                        
+                            return error;
+                       });
         },
     
         getMany: (resource, params) => {
@@ -78,7 +85,11 @@ const dataProvider= {
                                 data: response,
                         });                     
                     })
-                    .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message))
+                    .catch(error => {
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
         },
 
         getManyReference: (resource, params) => {
@@ -117,7 +128,11 @@ const dataProvider= {
                             }
                         );                     
                         })
-                    .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message))
+                    .catch(error => {
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
 
         },
 
@@ -137,7 +152,12 @@ const dataProvider= {
                     { headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': bearer
-                    }});
+                    }})
+                    .catch(error => {
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
                 
                 return({
                     data: response.data                        
@@ -172,7 +192,11 @@ const dataProvider= {
                                 },
                                 credentials: 'same-origin'
                             })
-                            .catch(error => console.log('Error '+ error.message))  
+                            .catch(error => {                        
+                                console.log(error.message)                                                            
+                                authProvider.checkError(error)                        
+                                return error;
+                            });  
                         } 
                     }
                 })
@@ -213,12 +237,20 @@ const dataProvider= {
                             },
                             credentials: 'same-origin'
                         })
-                        .catch(error => console.log('Error '+ error.message))                        
+                        .catch(error => {                        
+                            console.log(error.message)                                                            
+                            authProvider.checkError(error)                        
+                            return error;
+                        });                        
                     }
                     return({
                         data: response
                     })})
-                .catch(error => console.log('Error '+ error.message))
+                .catch(error => {                        
+                    console.log(error.message)                                                            
+                    authProvider.checkError(error)                        
+                    return error;
+                });
             
             } 
             else {                
@@ -244,7 +276,11 @@ const dataProvider= {
                     .then(response=> ({
                         data: response
                         }))
-                    .catch(error => console.log('Error '+ error.message))
+                    .catch(error => {                        
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    })
                 
             }
             
@@ -283,7 +319,11 @@ const dataProvider= {
                             }
                         );                     
                         })
-                        .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message));
+                        .catch(error => {                        
+                            console.log(error.message)                                                            
+                            authProvider.checkError(error)                        
+                            return error;
+                        });
         },
 
         create: async (resource, params) =>{
@@ -305,7 +345,12 @@ const dataProvider= {
                     { headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': bearer
-                    }});
+                    }})
+                    .catch(error => {
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
                 
                 return({
                     data: { ...datas, id: response.data.id },                        
@@ -349,7 +394,11 @@ const dataProvider= {
                             },
                             credentials: 'same-origin'
                         })
-                        .catch(error => console.log('Error '+ error.message))
+                        .catch(error => {                        
+                            console.log(error.message)                                                            
+                            authProvider.checkError(error)                        
+                            return error;
+                        })
                         
                     }
                     return({
@@ -357,7 +406,11 @@ const dataProvider= {
                         }
                     );  
                 })
-                .catch(error => console.log('Error '+ error.message))
+                .catch(error => {                        
+                    console.log(error.message)                                                            
+                    authProvider.checkError(error)                        
+                    return error;
+                });
             }
              else {
                 return fetch(url, {
@@ -386,7 +439,11 @@ const dataProvider= {
                             }
                         );                     
                     })
-                    .catch(error => console.log('Error '+ error.message));
+                    .catch(error => {                        
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
 
             }
             
@@ -411,7 +468,11 @@ const dataProvider= {
                         },
                         credentials: 'same-origin'
                     })
-                    .catch(error => console.log('Error '+ error.message))
+                    .catch(error => {                        
+                        console.log(error.message)                                                            
+                        authProvider.checkError(error)                        
+                        return error;
+                    });
                 });
 
             }
@@ -439,7 +500,11 @@ const dataProvider= {
                         }
                     );                     
                     })
-                .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message))
+                .catch(error => {                        
+                    console.log(error.message)                                                            
+                    authProvider.checkError(error)                        
+                    return error;
+                })
         }, 
         
         deleteMany: (resource, params) => {
@@ -476,13 +541,21 @@ const dataProvider= {
                                 },
                                 credentials: 'same-origin'
                             })
-                            .catch(error => console.log('Error '+ error.message))
+                            .catch(error => {                        
+                                console.log(error.message)                                                            
+                                authProvider.checkError(error)                        
+                                return error;
+                            })
                             
                         }
                         
                     })
                 })
-                .catch(error => console.log('Error '+ error.message))
+                .catch(error => {                        
+                    console.log(error.message)                                                            
+                    authProvider.checkError(error)                        
+                    return error;
+                })
             }
            
             return fetch(url, {
@@ -509,7 +582,11 @@ const dataProvider= {
                         }
                     );                     
                     })
-                .catch(error => console.log('Couldn\'t fetch the data\nError '+ error.message))
+                .catch(error => {                        
+                    console.log(error.message)                                                            
+                    authProvider.checkError(error)                        
+                    return error;
+                })
             
         }
 };

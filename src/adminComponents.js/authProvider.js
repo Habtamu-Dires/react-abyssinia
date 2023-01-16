@@ -34,12 +34,19 @@ const authProvider = {
         return Promise.resolve();
     },
     //called when the API returns an error
-    checkError: ({status}) =>{
+    checkError: (error) =>{
+        console.log("where do you call this one ----------------");
+        let message = error.message;                                                           
+        let matches = message.match(/(\d+)/);
+        let status = 500;
+        try{
+            status = Number(matches[0])
+        } catch(e){}
         if(status === 401 || status === 403) {
             //localStorage.removeItem('username');
             localStorage.removeItem('token');
             localStorage.removeItem('creds');
-            return Promise.reject();
+            return Promise.reject(); 
         }
         return Promise.resolve();
     },
