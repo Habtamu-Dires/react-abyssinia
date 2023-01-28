@@ -18,6 +18,7 @@ const authProvider = {
                         localStorage.setItem('token', response.token);
                         //if you needs creds username, firstname, lastname                     
                         localStorage.setItem('creds', JSON.stringify(response.creds));
+                        
                         return Promise.resolve();
                     }
                     else {

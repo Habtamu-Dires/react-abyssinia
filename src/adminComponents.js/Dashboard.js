@@ -6,7 +6,7 @@ import { Loading } from "../components/LoadingComponent";
 import {Bar, Line} from 'react-chartjs-2';
 import { Chart, registerables} from 'chart.js';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter,  FormGroup } from 'reactstrap';
-import { useLogout } from "react-admin";
+import { email, useLogout } from "react-admin";
 import {Formik, Form, useField} from 'formik';
 import {Row, Col} from "reactstrap";
 import * as Yup from 'yup';
@@ -49,6 +49,7 @@ const ProfileForm = () => {
         initialValues={{
             username: creds.username,
             name: creds.name,
+            email: creds.email,
             oldpassword: '',
             newpassword: '',            
             confirm_passowrd: ''
@@ -62,6 +63,8 @@ const ProfileForm = () => {
                 .min(2, 'Must be 2 or more characters')
                 .max(20, 'Must be 20 characters or less')
                 .required('Required'),
+            email: Yup.string()
+                .email('Invalid email addresss'),
             newpassword: Yup.string()
                 .min(3, 'Must be 3 or more characters')
                 .max(20, 'Must be 20 characters or less')
@@ -82,6 +85,8 @@ const ProfileForm = () => {
                            placeholder="Username"  />
             <MyTextInput label="Full Name" id="name" name="name" type="text" 
                         placeholder="Full Name" />
+            <MyTextInput label="Email" id="email" name="email" type="email" 
+                        placeholder="Email" />
             <MyTextInput label="Old Password" id="oldpassword" name="oldpassword" type="password" 
                         placeholder="Old Passsword"  />
             <MyTextInput label="New Password" id="newpassword" name="newpassword" type="password" 
@@ -117,6 +122,7 @@ const Profile = () => {
         
         const username = document.querySelector('#username').value;
         const name = document.querySelector('#name').value;
+        const email = document.querySelector('#email').value;
         const newpassword = document.querySelector('#newpassword').value;
         const oldpassword = document.querySelector('#oldpassword').value;
         const confirm_password = document.querySelector('#confirm_password').value;
@@ -130,6 +136,7 @@ const Profile = () => {
                 body:JSON.stringify({
                     username: username,
                     name: name,
+                    email: email,
                     newpassword: newpassword,
                     oldpassword: oldpassword
                 }),
@@ -157,31 +164,6 @@ const Profile = () => {
                 <ModalHeader toggle={toggle}>My Profile</ModalHeader>
                 <ModalBody>
                     <ProfileForm />
-                    {/*<form>
-                        <FormGroup className="row">
-                            <label htmlFor="username" className="ms-1 col-12">Username</label>
-                            <input type="text" id="username" className="ms-3 col-10" placeholder="Username"
-                             defaultValue={creds.username} required/>
-                        </FormGroup>
-                        <FormGroup className="row">
-                            <label htmlFor="fullname" className="ms-1 col-12">Full Name</label>
-                            <input type="text" id="fullname" className="ms-3 col-10" placeholder="Full Name"
-                             defaultValue={creds.name} />
-                        </FormGroup>
-                        <FormGroup className="row">
-                            <label htmlFor="oldpassword" className="ms-1 col-12">Old Password</label>
-                            <input type="password" id="oldpassword" className="ms-3 col-10" placeholder="Old Password"/>
-                        </FormGroup>
-                        <FormGroup className="row">
-                            <label htmlFor="newpassword" className="ms-1 col-12">New Password</label>
-                            <input type="password" id="newpassword" className="ms-3 col-10" placeholder="New Password"/>
-                        </FormGroup>
-                        <FormGroup className="row">
-                            <label htmlFor="confirm_password" className="ms-1 col-12">Confirm Password</label>
-                            <input type="password" id="confirm_password" className="ms-3 col-10" placeholder="Confirm Password"/>
-                        </FormGroup>
-                    </form> */}
-                    
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={save_profile}>Save</Button>

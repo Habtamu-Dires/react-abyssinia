@@ -18,6 +18,7 @@ import { fetchPrograms } from "../redux/programsSlice";
 import { fetchClasses } from "../redux/classSlice";
 import { fetchCorouselItems } from "../redux/carouselItemSlice";
 
+import ResetPassword from '../adminComponents.js/resetPassword';
 
 function Main()  {
    
@@ -71,7 +72,8 @@ function Main()  {
                 <Route path="/contactus" element={<UserPage page={ContactUs} />}/>
                 <Route path="/registerSuccess" element={<UserPage page= {Registered} />} />
                 <Route path="/calender" element={<UserPage page = {Calender} />}/>
-                <Route path="/admin/*" element={<AdminPage />} />  
+                <Route path="/admin/*" element={<AdminPage />} />
+                <Route path='/resetPassword' element={<ResetPassword />} />
                 <Route path="*" element={
                     <Navigate to='/home' replace />
                 } />                

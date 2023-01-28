@@ -52,10 +52,7 @@ const MySelect = ({ label, ...props }) => {
 
 
 function Register(props)  {
-        console.log("oh my heart")
-        const [refresh, setRefresh] = useState(false);
-        
-
+    
         let navigate = useNavigate();
 
         const programs = useSelector(state => state.programs);
