@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Card, CardBody, CardTitle } from "reactstrap";
-import { baseUrl } from "../shared/baseUrl";
+//import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function Home()  {
 
@@ -19,8 +21,7 @@ function Home()  {
                 {errMess} <br></br>
                 {errMess} <br></br>
                 {errMess}
-            </div>
-            
+            </div>            
         );
     } else if(programs.status === 'succeeded')  {
         let shift = true;
@@ -31,7 +32,7 @@ function Home()  {
                     <div key={program.id} className="container">
                         <div className="row d-flex align-items-center justify-content-center mt-5">
                             <div className="col-sm-5 me-1">
-                                <img className="home-image img-fluid" src={baseUrl + program.image} alt={program.name} />
+                                <img className="home-image img-fluid" src={program.image_url} alt={program.name} />
                             </div>
                             <div className="col-sm-5 home-text">
                                 <h4>{program.name}</h4>
@@ -50,7 +51,7 @@ function Home()  {
                                     <p>{program.description}</p>
                                 </div>
                                 <div className="col col-sm-5">
-                                    <img className="home-image img-fluid" src={baseUrl + program.image} alt={program.name} />
+                                    <img className="home-image img-fluid" src={program.image_url} alt={program.name} />
                                 </div>
                                 
                         </div>

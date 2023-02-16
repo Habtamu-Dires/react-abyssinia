@@ -41,7 +41,7 @@ export const StuffCreate = () => (
             <TextInput disabled source="id" />
             <TextInput source="name" />
             <TextInput source="designation" />
-            <TextInput source="description" />
+            <TextInput multiline fullWidth source="description" />
         </SimpleForm>
     </Create>
 );

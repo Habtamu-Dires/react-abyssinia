@@ -36,8 +36,13 @@ function Calender() {
     } else if(classes.status === 'succeeded') {
 
         let accd_counter  = 0; //accordion togle target counter
+        // lets sort it so that the others appear at the last
+        const programSorted = programs.programs.filter(program => program.name !== "Others");
+        if(programs.programs.find(program => program.name === 'Others')){
+            programSorted.push(programs.programs.find(program => program.name === 'Others'))
+        }
         //for each program
-        const classSchedule = programs.programs.map(program=>{
+        const classSchedule = programSorted.map(program=>{
             const Classes = classes.classes.filter(theClass =>
                 theClass.program === program.id
             )

@@ -1,4 +1,4 @@
-import { baseUrl } from "../shared/baseUrl";
+//import { baseUrl } from "../shared/baseUrl";
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import {Row, Col, Modal,ModalHeader, ModalBody } from 'reactstrap';
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNotify } from "react-admin";
 import { useNavigate } from "react-router-dom";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);

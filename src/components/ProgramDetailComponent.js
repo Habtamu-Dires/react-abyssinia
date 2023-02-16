@@ -2,9 +2,11 @@ import React from "react";
 import {Breadcrumb, BreadcrumbItem, Row, Col} from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { baseUrl } from "../shared/baseUrl";
+//import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 import {TimeAgo} from '../shared/TimeAgo';
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function ProgramDetail() {
     const {programId} = useParams();
@@ -91,7 +93,7 @@ function ProgramDetail() {
                     <div className="col-8 row program_detail" >
                         <h3>{program.name}</h3>
                         <div className="col-10">
-                                <img  className="m-3" src={baseUrl + program.image} height="200" width="300"></img> 
+                                <img  className="m-3" src={program.image_url} height="200" width="300"></img> 
                         </div>
                         
                         <h3>Description</h3>

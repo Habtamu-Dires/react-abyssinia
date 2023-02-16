@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, Media } from 'reactstrap';
-import { baseUrl } from "../shared/baseUrl";
+//import { baseUrl } from "../shared/baseUrl";
 import { Link } from 'react-router-dom';
 import { Loading } from "./LoadingComponent";
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Stuffs = () => {
 

@@ -4,7 +4,9 @@ import {
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { baseUrl } from '../shared/baseUrl';
+//import { baseUrl } from '../shared/baseUrl';
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function Carousal(props)  {
   
@@ -49,7 +51,7 @@ function Carousal(props)  {
           tag="div"
           key={item.id}
         >  
-        <img className='carouselBackgrund img-fluid' src={base_url + item.image} alt={"bdr"} />
+        <img className='carouselBackgrund img-fluid' src={item.image_url} alt={"bdr"} />
         <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
                 <h2>{item.title}</h2>
                 <p>{item.sub_title}</p>       

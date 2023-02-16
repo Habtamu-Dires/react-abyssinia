@@ -331,13 +331,13 @@ const dataProvider= {
             const bearer = 'Bearer ' + localStorage.getItem('token');
 
             if(resource === 'programs' || resource === 'carousels'){
-                console.log("we are In")
+                
                 const formData = new FormData();
                 if(params.data.pictures) {
                     formData.append("imageFile",params.data.pictures.rawFile);
                 }
                 let {pictures, ...datas} = params.data;
-                console.log(datas); 
+                
                 
                 formData.append("datas", JSON.stringify(datas));
 

@@ -17,8 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPrograms } from "../redux/programsSlice";
 import { fetchClasses } from "../redux/classSlice";
 import { fetchCorouselItems } from "../redux/carouselItemSlice";
-
 import ResetPassword from '../adminComponents.js/resetPassword';
+
 
 function Main()  {
    

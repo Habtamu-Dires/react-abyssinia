@@ -1,4 +1,5 @@
-import {baseUrl} from '../shared/baseUrl'
+//import {baseUrl} from '../shared/baseUrl';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const authProvider = {
     //called when the user attempts to log in
     login: ({username:username, password: password}) => {

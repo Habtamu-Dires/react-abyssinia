@@ -5,9 +5,10 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import {  useSelector } from 'react-redux';
 import fetch from 'cross-fetch';
-import { baseUrl } from '../shared/baseUrl';
+//import { baseUrl } from '../shared/baseUrl';
 import { Persist } from 'formik-persist';
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -70,7 +71,12 @@ function Register(props)  {
         }
         else if(programs.status === 'succeeded') {
             //bring programs from redux store
-            programList = programs.programs.map((program) => {
+            // lets sort it so that the others appear at the last
+            const programSorted = programs.programs.filter(program => program.name !== "Others");
+            if(programs.programs.find(program => program.name === 'Others')){
+                programSorted.push(programs.programs.find(program => program.name === 'Others'))
+            }
+            programList = programSorted.map((program) => {
                 return (
                     <option key={program.id} value={program.id}>{program.name}</option>
                 );
@@ -177,12 +183,12 @@ function Register(props)  {
 
 
                                 <MySelect label="Program" name="program">
-                                    <option value="" disabled={true} selected={true}>Select Program</option>
-                                    {programList}
+                                    <option value="" disabled={true} selected={true}>Select Program</option>    
+                                    {programList}                    
                                 </MySelect>
-
-                                {
-                                props.values.program === programs.programs.find(prog=>prog.name ==="Others").id && (
+                                { programs.programs.find(prog=>prog.name === "Others")&&                              
+                                props.values.program === programs.programs.find(prog=>prog.name ==="Others").id                              
+                                && (
                                     <MyTextInput label="Other" name="otherProgram" type="text"
                                         placeholder="other program you want" />
                                 )}

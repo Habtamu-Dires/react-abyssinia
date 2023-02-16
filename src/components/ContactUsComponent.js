@@ -3,9 +3,11 @@ import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap'
 import { Link } from 'react-router-dom';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { baseUrl } from '../shared/baseUrl';
+//import { baseUrl } from '../shared/baseUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 //map
 const AnyReactComponent = ({ text }) => <div> {text}</div>;
@@ -212,7 +214,7 @@ const FeedbackForm = () => {
             <MyTextArea label="Your Feedback" name="feedback" rows="6" />
             
             <Row className='form-group my-3 d-flex '>
-                <Col md={4}>
+                <Col md={4} className="offset-2">
                     <button className='btn btn-primary' type='submit'>Send Feedback</button>
                 </Col>
             </Row>

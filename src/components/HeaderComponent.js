@@ -31,7 +31,13 @@ function Header() {
             ]
             
        } else {
-            items = programs.programs.map((program)=>{
+        
+            // lets sort it so that the others appear at the last
+            const programSorted = programs.programs.filter(program => program.name !== "Others");
+            if(programs.programs.find(program => program.name === 'Others')){
+                programSorted.push(programs.programs.find(program => program.name === 'Others'))
+            }
+            items = programSorted.map((program)=>{
                 return(     
                     <div key={program.id} onClick={toggleDropdown} >
                         <Link  className="link"  to={`/programDetail/${program.id}`}>

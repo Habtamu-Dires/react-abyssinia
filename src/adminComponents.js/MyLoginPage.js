@@ -2,8 +2,9 @@ import * as React from 'react';
 import {useState} from 'react';
 import { userLogin, useNotify, Notification, useSafeSetState, useLogin, required } from 'react-admin';
 import { Modal,ModalHeader, ModalBody, ModalFooter ,FormGroup,  } from 'reactstrap';
-import { baseUrl } from '../shared/baseUrl';
+//import { baseUrl } from '../shared/baseUrl';
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyLoginPage = () => {
     const [username, setUsername] = useState('');

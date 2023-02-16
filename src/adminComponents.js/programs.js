@@ -55,7 +55,7 @@ export const ProgramCreate = () => (
         <Create> 
             <SimpleForm>
                 <TextInput required source="name" />
-                <TextInput required multiline source="description" />
+                <TextInput required multiline fullWidth source="description" />
                 <ArrayInput source="modules">
                     <SimpleFormIterator inline>
                         <TextInput source="module" helperText={false}/>
