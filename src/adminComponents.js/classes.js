@@ -43,6 +43,16 @@ const partOfTheDay = [
     {'id': 'night', name: "Night"}
 ]
 
+const theDay = [
+    {'id': 'Monday', name:'Monday'},
+    {'id': 'Tuesday', name:'Tuesday'},
+    {'id': 'Wednsday', name:'Wednsday'},
+    {'id': 'Thursday', name:'Thursday'},
+    {'id': 'Friday', name:'Friday'},
+    {'id': 'Saturday', name:'Saturday'},
+    {'id': 'Sunday', name:'Sunday'}
+]
+
 function ClassTitle  ({EditContext,setValue,renderStatus,setRenderStatus}) {
     //get the program
     const record = useRecordContext();
@@ -102,7 +112,7 @@ export const ClassEdit = () => {
                     </ReferenceInput>            
                     <ArrayInput source="schedule">
                         <SimpleFormIterator inline>
-                            <TextInput source="day" />
+                            <SelectInput source="day" choices={theDay}/>
                             <SelectInput source='partOfTheDay' choices={partOfTheDay}/>
                             <TextInput source="time" />
                         </SimpleFormIterator>
@@ -148,7 +158,7 @@ export const ClassCreate = () => {
                 </ReferenceInput>            
                 <ArrayInput required source="schedule">
                     <SimpleFormIterator inline>
-                        <TextInput source="day" />
+                        <SelectInput source="day" choices={theDay}/>
                         <SelectInput source='partOfTheDay' choices={partOfTheDay}/>
                         <TextInput source="time" />
                     </SimpleFormIterator>
