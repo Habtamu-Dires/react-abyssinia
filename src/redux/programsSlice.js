@@ -31,7 +31,7 @@ const programSlice = createSlice({
 });
 
 export const fetchPrograms = createAsyncThunk('programs/fetchPrograms', async()=>{
-    const response = await fetch(baseUrl + 'programs');
+    const response = await fetch(baseUrl + '/programs');
     return response.json();
 })
 

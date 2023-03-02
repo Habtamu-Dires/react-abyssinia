@@ -32,7 +32,7 @@ const classSlice = createSlice({
 });
 
 export const fetchClasses = createAsyncThunk('classes/fetchClasses', async()=>{
-    const response = await fetch(baseUrl + 'classes')
+    const response = await fetch(baseUrl + '/classes')
     return response.json()
 })
 
