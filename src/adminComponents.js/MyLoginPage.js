@@ -30,7 +30,7 @@ const MyLoginPage = () => {
         toggle();
         const email = document.getElementById('email').value;
         console.log(email)
-        const apiUrl =  baseUrl + 'users/forgetPassword';
+        const apiUrl =  baseUrl + '/users/forgetPassword';
         fetch(apiUrl, {           
             method: 'POST',
             headers: { 

@@ -142,7 +142,7 @@ function Certificate(props) {
                 values.name = values.name.split(' ').map(word => 
                     word[0].toUpperCase()+word.substring(1).toLowerCase()).join(' ');
                 const query = {name: values.name, phone:values.phone}
-                const url = `${baseUrl}students?${stringify(query)}`;
+                const url = `${baseUrl}/students?${stringify(query)}`;
                 fetch(url, {
                     method: 'GET',    
                     headers: {

@@ -157,7 +157,7 @@ const FeedbackForm = () => {
          
          onSubmit={(values, {resetForm, setSubmitting}) => {
 
-            fetch(baseUrl + 'feedbacks', {
+            fetch(baseUrl + '/feedbacks', {
                 method: 'POST',
                 body: JSON.stringify(values),
                 headers: {

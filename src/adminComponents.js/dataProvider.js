@@ -3,7 +3,9 @@ import axios from 'axios';
 import fetch from 'cross-fetch';
 import authProvider from './authProvider';
 
-const apiUrl = 'http://localhost:3000';
+//const apiUrl = process.env.baseurl;
+
+const apiUrl = process.env.REACT_APP_BASE_URL
 
 const dataProvider= {
     getList: (resource, params) => {

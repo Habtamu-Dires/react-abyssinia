@@ -56,7 +56,7 @@ function ResetForm() {
             onSubmit={(values, {})=>{
                 const bearer = 'Bearer ' + urlObject.token;
         
-                const url = `${baseUrl}users/resetPassword`;
+                const url = `${baseUrl}/users/resetPassword`;
                 fetch(url,{
                     method: 'PUT',
                     body:JSON.stringify({

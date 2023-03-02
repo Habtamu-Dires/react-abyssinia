@@ -5,7 +5,7 @@ const authProvider = {
     login: ({username:username, password: password}) => {
         const creds = {username:username, password:password}
         
-        return fetch(baseUrl + 'users/login', {
+        return fetch(baseUrl + '/users/login', {
                     method: 'POST',
                     headers: { 
                         'Content-Type':'application/json' 

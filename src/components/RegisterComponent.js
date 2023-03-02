@@ -139,7 +139,7 @@ function Register(props)  {
                                     word[0].toUpperCase()+word.substring(1).toLowerCase()).join(' ');    
                             }
                                                             
-                            fetch(baseUrl + 'students', {
+                            fetch(baseUrl + '/students', {
                                 method: 'POST',
                                 body: JSON.stringify(values),
                                 headers: {

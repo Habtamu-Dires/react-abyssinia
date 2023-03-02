@@ -133,7 +133,7 @@ const Profile = () => {
             alert("The password you enter are different");
         } else {
 
-            fetch(`${baseUrl}users/update`,{
+            fetch(`${baseUrl}/users/update`,{
                 method: 'PUT',
                 body:JSON.stringify({
                     username: username,
@@ -186,7 +186,7 @@ const Dashboard = () => {
     
     //fetch students
     if(students === null) {
-        fetch(baseUrl + 'students')
+        fetch(baseUrl + '/students')
         .then(response => response.json())
         .then(response => {
             setStudents(response);
