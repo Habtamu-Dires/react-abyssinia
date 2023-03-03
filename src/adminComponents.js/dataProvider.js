@@ -18,9 +18,16 @@ const dataProvider= {
             filter: JSON.stringify(params.filter),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+
         let len = 0;
-        return axios.get(url)
+        return axios.get(url,{
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': bearer
+             },
+             credentials: 'same-origin'
+            })
             .then(response => {
                 
                 len =parseInt(response.headers.get('content-range').split('/').pop(), 10);
@@ -42,7 +49,14 @@ const dataProvider= {
 
         getOne: (resource, params) => {
             const url = `${apiUrl}/${resource}/${params.id}`;
-            return fetch(url)
+            return fetch(url,{
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': bearer
+                        },
+                        credentials: 'same-origin'
+                    })
                     .then(response => {
                         if(response.ok) {
                             return response;
@@ -72,7 +86,14 @@ const dataProvider= {
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
             
-            return fetch(url)
+            return fetch(url,{
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': bearer
+                        },
+                        credentials: 'same-origin'
+                    })
                     .then(response => {
                         if(response.ok) {
                             return response;
@@ -108,7 +129,14 @@ const dataProvider= {
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
             let len = 0;
-            return fetch(url)
+            return fetch(url,{
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': bearer
+                        },
+                        credentials: 'same-origin'
+                    })
                     .then(response => {
                         if(response.ok) {
                             return response;
@@ -171,6 +199,7 @@ const dataProvider= {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': bearer
                     },
                     credentials: 'same-origin'
                 }).then(response => response.json())
