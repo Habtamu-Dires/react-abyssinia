@@ -92,16 +92,31 @@ function ProgramDetail() {
                 <div className="row">
                     <div className="col-8 row program_detail" >
                         <h3>{program.name}</h3>
-                        <div className="col-10">
+                        {program.image_url &&
+                            <div className="col-10">
                                 <img  className="m-3" src={program.image_url} height="200" width="300"></img> 
-                        </div>
+                            </div>
+                        }
+                        
                         
                         <h3>Description</h3>
                         <p className="offset-1">{program.description}</p>
-                        <h3>Modules</h3>
-                            <ul className="offset-1">
-                                {modules}
-                            </ul>
+                        {program.name === 'Others' &&
+                            <>
+                             <h3>Programs</h3>
+                                <ul className="offset-1">
+                                    {modules}
+                                </ul>
+                            </>   
+                        }
+                        {program.name !== 'Others' &&
+                            <>
+                             <h3>Modules</h3>
+                                <ul className="offset-1">
+                                    {modules}
+                                </ul>
+                            </>   
+                        }
                             
                         <h3>Program Prerequisite</h3>
                         <ul className="offset-1">
