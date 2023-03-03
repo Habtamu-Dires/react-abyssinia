@@ -49,6 +49,8 @@ const dataProvider= {
 
         getOne: (resource, params) => {
             const url = `${apiUrl}/${resource}/${params.id}`;
+            const bearer = 'Bearer ' + localStorage.getItem('token');
+
             return fetch(url,{
                         method: 'GET',
                         headers: {
@@ -85,7 +87,8 @@ const dataProvider= {
                 filter: JSON.stringify({ id: params.ids }),
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
-            
+             const bearer = 'Bearer ' + localStorage.getItem('token');
+
             return fetch(url,{
                         method: 'GET',
                         headers: {
@@ -128,6 +131,8 @@ const dataProvider= {
                 }),
             };
             const url = `${apiUrl}/${resource}?${stringify(query)}`;
+            const bearer = 'Bearer ' + localStorage.getItem('token');
+            
             let len = 0;
             return fetch(url,{
                         method: 'GET',
