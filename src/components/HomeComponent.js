@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Card, CardBody, CardTitle } from "reactstrap";
-//import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+import { baseUrl } from "../shared/baseUrl";
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function Home()  {
 

@@ -4,7 +4,8 @@ import { Breadcrumb, BreadcrumbItem, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from "./LoadingComponent";
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+//const baseUrl = process.env.REACT_APP_BASE_URL;
+import { baseUrl } from "../shared/baseUrl";
 
 const Stuffs = () => {
 
@@ -14,7 +15,7 @@ const Stuffs = () => {
     useEffect(()=> {
         if(status === false) {
             //fetch data
-            fetch(baseUrl + 'stuffs')
+            fetch(baseUrl + '/stuffs')
             .then(response => {
                 if(response.ok) {
                     return response;
@@ -91,7 +92,7 @@ const About = () => {
                     <p>The training center has more than thousounds of certified studetns in Bahir Dar, a successful chain started by our CEO, Mr.Getachew, that featured for the first time the citie's best training center.</p>
                 </div>
                 <div className="col-12 col-md-5 m-3">
-                    <img src={baseUrl + '/images/sample.jpg'} height="300" width="350"></img>
+                    <img src={''} alt="img" height="300" width="350"></img>
                 </div>
             </div>
             <div className="row">

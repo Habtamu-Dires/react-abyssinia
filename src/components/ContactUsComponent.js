@@ -3,11 +3,11 @@ import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap'
 import { Link } from 'react-router-dom';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-//import { baseUrl } from '../shared/baseUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+import { baseUrl } from '../shared/baseUrl';
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 //map
 const AnyReactComponent = ({ text }) => <div> {text}</div>;

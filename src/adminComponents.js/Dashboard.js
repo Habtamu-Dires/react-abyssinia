@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from '@mui/material';
-//import { baseUrl } from "../shared/baseUrl";
+import { baseUrl } from "../shared/baseUrl";
 import { useSelector } from "react-redux";
 import { Loading } from "../components/LoadingComponent";
 import {Bar, Line} from 'react-chartjs-2';
@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 
 Chart.register(...registerables);
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);

@@ -4,9 +4,9 @@ import {
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-//import { baseUrl } from '../shared/baseUrl';
+import { baseUrl } from '../shared/baseUrl';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function Carousal(props)  {
   

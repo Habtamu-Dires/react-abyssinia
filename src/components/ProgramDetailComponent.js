@@ -2,10 +2,10 @@ import React from "react";
 import {Breadcrumb, BreadcrumbItem, Row, Col} from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
-//import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 import {TimeAgo} from '../shared/TimeAgo';
 
+//import { baseUrl } from "../shared/baseUrl";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function ProgramDetail() {

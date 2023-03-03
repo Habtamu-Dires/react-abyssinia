@@ -5,10 +5,10 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import {  useSelector } from 'react-redux';
 import fetch from 'cross-fetch';
-//import { baseUrl } from '../shared/baseUrl';
 import { Persist } from 'formik-persist';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+import { baseUrl } from '../shared/baseUrl';
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);

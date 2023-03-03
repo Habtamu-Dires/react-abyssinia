@@ -5,10 +5,10 @@ import {Formik, Form, useField} from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from "react-redux";
 import { Persist } from "formik-persist";
-//import { baseUrl } from "../shared/baseUrl";
+import { baseUrl } from "../shared/baseUrl";
 import { stringify } from 'query-string';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Result = ({status,message}) => {
     if(status === true){
