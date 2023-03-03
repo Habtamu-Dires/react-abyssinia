@@ -184,9 +184,16 @@ const Dashboard = () => {
     const errMess = useSelector(state => state.programs.error);
     const classes = useSelector(state => state.classes);
     
+    const bearer = 'Bearer ' + localStorage.getItem('token');
     //fetch students
     if(students === null) {
-        fetch(baseUrl + '/students')
+        fetch(baseUrl + '/students',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': bearer
+            },
+            credentials: 'same-origin'
+        })
         .then(response => response.json())
         .then(response => {
             setStudents(response);
