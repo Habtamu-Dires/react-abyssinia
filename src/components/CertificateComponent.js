@@ -225,7 +225,7 @@ function Certificate(props) {
             </Breadcrumb>
             <div className="row">
                 <h4>Check Your Certificate Online</h4>
-                <div className="col col-md-6 mt-2 mb-2 ">
+                <div className="col-12 col-md-6 mt-2 mb-2 ">
                     <Card>
                         <CardHeader>
                             <h3>Personal Information</h3>
@@ -235,7 +235,7 @@ function Certificate(props) {
                         </CardBody>
                     </Card>
                 </div>
-                <div className="col col-md-6 mt-2 mb-2 d-flex justify-content-center">
+                <div className="col-12 col-md-6 mt-2 mb-2 d-flex justify-content-center">
                     {<Result status={status} message={message}/>}
                 </div> 
                            

@@ -56,7 +56,7 @@ function Carousal(props)  {
                 <h2>{item.title}</h2>
                 <p>{item.sub_title}</p>       
         </div>
-          <CarouselCaption  captionText={""} 
+          <CarouselCaption   captionText={""} 
               captionHeader={
                 <Link to='/register' className=' btn-register justify-self-center 
                 animate__animated animate__fadeInUp animate__slower'>Register</Link>

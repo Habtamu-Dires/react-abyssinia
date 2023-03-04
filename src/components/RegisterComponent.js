@@ -14,7 +14,7 @@ const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
         <Row className='form-group mt-2'>
-            <Col md={2}>
+            <Col md={2} >
                 <label htmlFor='{props.id || props.name}'>{label}</label>
             </Col>
 
@@ -35,7 +35,7 @@ const MySelect = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
         <Row className='form-group mt-2'>
-            <Col md={2}>
+            <Col md={2} >
                 <label htmlFor='{props.id || props.name}'>{label}</label>
             </Col>
             <Col md={6}>
@@ -218,7 +218,7 @@ function Register(props)  {
                                     <option value="any_time">Any Time</option>
                                 </MySelect>
 
-                                <Row className='form-group my-3 d-flex justify-content-center'>        
+                                <Row className='form-group my-3 d-flex justify-content-center of'>        
                                     <Col md={4}>
                                         <button className='btn btn-success' type='submit'>Submit</button>
                                     </Col>
@@ -244,8 +244,11 @@ function Register(props)  {
                         <Card className='row d-flex justify-content-center my-3'>
                             <CardHeader className='d-flex justify-content-center'>
                                 <h3>Register</h3></CardHeader>
-                            <CardBody className='col-10 offset-2'>
-                                <RegisterForm />
+                            <CardBody className='col-12 d-flex justify-content-centern'>
+                                <div className='regFormContainer'>
+                                    <RegisterForm />
+                                </div>
+                                
                             </CardBody>
 
                         </Card>

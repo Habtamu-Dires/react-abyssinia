@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseUrl } from "../shared/baseUrl";
-//const baseUrl = process.env.REACT_APP_BASE_URL;
+//import { baseUrl } from "../shared/baseUrl";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     programs: [],

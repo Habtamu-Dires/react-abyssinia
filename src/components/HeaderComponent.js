@@ -65,7 +65,7 @@ function Header() {
                             <NavLink className="nav-link" to="/home">Home </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className="nav-link" to="/about">About</NavLink>
+                            <NavLink className="nav-link"  to="/about">About</NavLink>
                         </NavItem>
                         <NavItem>
                             <Dropdown className="dropdown"  isOpen={dropdownopen}  toggle={toggleDropdown} >
@@ -86,7 +86,7 @@ function Header() {
                             
                         </NavItem>
                         <NavItem>
-                            <NavLink className="nav-link" to="/register">Register Online</NavLink>
+                            <NavLink className="nav-link"  to="/register">Register Online</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink className="nav-link" to="/calender">Our Calender</NavLink>

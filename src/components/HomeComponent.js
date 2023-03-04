@@ -66,9 +66,9 @@ function Home()  {
                 <Card style={{background: '#2a7285',
                               color:"floralwhite",
                               fontStyle: "bold"}}>
-                    <CardBody className="m-2">
+                    <CardBody className="m-1">
                         <CardTitle className="d-flex justify-content-center align-items-center">
-                            <h4>Our Programs</h4>
+                            <h5>Our Programs</h5>
                         </CardTitle>
                     </CardBody>
                 </Card>
