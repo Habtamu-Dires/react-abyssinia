@@ -2,11 +2,11 @@ import { stringify } from 'query-string';
 import axios from 'axios';
 import fetch from 'cross-fetch';
 import authProvider from './authProvider';
-import { baseUrl } from '../shared/baseUrl';
+//import { baseUrl } from '../shared/baseUrl';
 
-const apiUrl = baseUrl;
+//const apiUrl = baseUrl;
 
-//const apiUrl = process.env.REACT_APP_BASE_URL
+const apiUrl = process.env.REACT_APP_BASE_URL
 
 const dataProvider= {
     getList: (resource, params) => {

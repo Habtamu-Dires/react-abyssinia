@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import { Loading } from "./LoadingComponent";
 
-import { baseUrl } from "../shared/baseUrl";
-//const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function Home()  {
 

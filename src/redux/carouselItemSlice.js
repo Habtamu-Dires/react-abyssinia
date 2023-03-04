@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { baseUrl } from "../shared/baseUrl";
-//const baseUrl = process.env.REACT_APP_BASE_URL;
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const initialState ={
     carouselItems: [],

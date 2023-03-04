@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
-import { baseUrl } from '../shared/baseUrl';
-//const baseUrl = process.env.REACT_APP_BASE_URL;
+//import { baseUrl } from '../shared/baseUrl';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 //map
 const AnyReactComponent = ({ text }) => <div> {text}</div>;

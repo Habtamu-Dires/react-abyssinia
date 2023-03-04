@@ -7,8 +7,8 @@ import {  useSelector } from 'react-redux';
 import fetch from 'cross-fetch';
 import { Persist } from 'formik-persist';
 
-import { baseUrl } from '../shared/baseUrl';
-//const baseUrl = process.env.REACT_APP_BASE_URL;
+//import { baseUrl } from '../shared/baseUrl';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
