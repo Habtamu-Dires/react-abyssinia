@@ -110,8 +110,13 @@ const About = () => {
             <div className="row">
                <div className="col-12 col-md-6">
                     <h2>Our History</h2>
-                    <p>Started in 1998, Abyssinia computer Training Center is one of the leading computer trinaing center in Bahir Dar.</p>
-                    <p>The training center has more than thousounds of certified studetns in Bahir Dar, a successful chain started by our CEO, Mr.Getachew, that featured for the first time the citie's best training center.</p>
+                    <p>Started in 2004 EC, Abyssinia computer Training Center is one of the leading computer trinaing center in Bahir Dar.</p>
+                    <p>The training center is well know for providing quality trainings for goverment and non goverment organizations
+                            and for individauls from different background, 
+                            enabaling them to be better in thier respective areas through the use 
+                            computer and softwares.</p> 
+                    <p> Curretnly it has more than hundreds of certified individauls.</p>
+                    <p></p>
                 </div>
                 <div className="col-12 col-md-5 m-3">
                     <img src={imgUrl} alt="img" height="300" width="350"></img>

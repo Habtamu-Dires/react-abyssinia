@@ -54,7 +54,7 @@ function Carousal(props)  {
         <img className='carouselBackgrund img-fluid' src={item.image_url} alt={"bdr"} />
         <div className='carousel-center-text animate__animated animate__fadeInDown animate__slower'>
                 <h2>{item.title}</h2>
-                <p>{item.sub_title}</p>       
+                <p style={{fontSize: '20px'}}>{item.sub_title}</p>       
         </div>
           <CarouselCaption   captionText={""} 
               captionHeader={

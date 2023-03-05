@@ -253,7 +253,7 @@ function ContactUs () {
                         Bahir Dar<br/><br/>
                         <i className="fa fa-phone"></i>: +251 1834 0529<br />
                         <i className="fa fa-fax"></i>: +251 1834 0529<br />
-                        <i className="fa fa-envelope"></i>: <a href="mailto:abyssinia19@gmail.com">abyssinia19@gmail.com</a>
+                        <i className="fa fa-envelope"></i>: <a href="mailto:abyssiniacomputer19@gmail.com">abyssiniacomputer19@gmail.com</a>
                         </address>
                 </div>
                 <div className="col-12 col-sm-6 offset-sm-1">
@@ -266,7 +266,7 @@ function ContactUs () {
                     <div className="btn-group" role="group">
                         <a role="button" className="btn btn-primary" href="tel:+251918340529"><i className="fa fa-phone"></i> Call</a>
                         <a role="button" className="btn btn-info"><i className="fa fa-skype"></i> Skype</a>
-                        <a role="button" className="btn btn-success" href=""><i className="fa fa-envelope-o"></i> Email</a>
+                        <a role="button" className="btn btn-success" href="mailto:abyssiniacomputer19@gmail.com"><i className="fa fa-envelope-o"></i> Email</a>
                     </div>
                 </div>
             </div>

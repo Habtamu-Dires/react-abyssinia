@@ -15,19 +15,20 @@ function Footer(props) {
                         <h5>Links</h5>
                         <ul className="list-unstyled">
                             <li><Link to="/">Home</Link></li>
-                            <li><Link to="./aboutus">About Us</Link></li>
-                            <li><Link to="./clander">Our Clander</Link></li>
-                            <li><Link to="./certificate">Certificate</Link></li>
+                            <li><Link to="/about">About Us</Link></li>
+                            <li><Link to="/calender">Our Clander</Link></li>
+                            <li><Link to="/certificate">Certificate</Link></li>
+                            <li><Link to="/contactus">Coontact Us</Link></li>
                         </ul>
                     </div>
                     <div className="col-7 col-sm-5">
                         <h5>Our Address</h5>
                         <address>
                             Serga Building Ground Floor<br/>
-                            Infront of avanti Hotel<br />
-                            Bahir Dar<br/><br/>
-                            <i className="fa fa-phone fa-lg"></i>: +251 918 310782<br />
-                            <i className="fa fa-envelope fa-lg"></i>: <a href="#">abyssinia@gmail.com</a>
+                            Infront of Avanti Hotel<br />
+                            Bahir Dar, Ethiopia<br/><br/>
+                            <i className="fa fa-phone fa-lg"></i>: +251 1834 0529<br />
+                            <i className="fa fa-envelope fa-lg"></i>: <a  href="mailto:abyssiniacomputer19@gmail.com">abyssiniacomputer19@gmail.com</a>
                         </address>
                     </div>
                     <div className="col-12 col-sm-4">
@@ -35,14 +36,14 @@ function Footer(props) {
                         <div><p>
                             Abyssina Computer Trining Center is one of the leading
                             training center in Bahir Dar with more than 10 years of 
-                            exprinace.
+                            exprinace in teaching computer and different softwares.
                         </p></div>
                         <div className="text-center">
-                            <a className="btn btn-social-icon btn-facebook" href="#"><i className="fa fa-facebook fa-lg"></i></a>
-                            <a className="btn btn-social-icon btn-twitter" href="#"><i className="fa fa-twitter fa-lg"></i></a>
-                            <a className="btn btn-social-icon btn-linkedin" href="#"><i className="fa fa-linkedin fa-lg"></i></a>
-                            <a className="btn btn-social-icon btn-google" href="#"><i className="fa fa-youtube fa-lg"></i></a>
-                            <a className="btn btn-social-icon" href="#"><i className="fa fa-envelope fa-lg"></i></a>
+                            <i className="btn btn-social-icon btn-facebook"><a /*href=""*/ className="fa fa-facebook fa-lg"></a></i>
+                            <i className="btn btn-social-icon btn-twitter"><a /*href=""*/ className="fa fa-twitter fa-lg"></a></i>
+                            <i className="btn btn-social-icon btn-linkedin"><a /*href=""*/ className="fa fa-linkedin fa-lg"></a></i>
+                            <i className="btn btn-social-icon btn-google"><a /*href=""*/ className="fa fa-youtube fa-lg"></a></i>
+                            <i className="btn btn-social-icon"><a href="mailto:abyssiniacomputer19@gmail.com" className="fa fa-envelope fa-lg"></a></i>
                         </div>
                     </div>
                 </div>
